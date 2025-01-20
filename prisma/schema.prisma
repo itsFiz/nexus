@@ -1,0 +1,165 @@
+// Location: /nexus/prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // Use pooled connection by default
+  directUrl = env("POSTGRES_URL_NON_POOLING") // Use direct connection for migrations
+}
+
+
+enum UserRole {
+  FOUNDER
+  EXECUTIVE
+  VENTURE_LEAD
+  TECH_LEAD
+  HR_MANAGER
+  PRODUCT_MANAGER
+  DEVELOPER
+  ANALYST
+  FINANCE_ADMIN
+  HR_ADMIN
+  PROJECT_LEAD
+  TEAM_MEMBER
+  INVESTOR
+  PARTNER
+  AUDITOR
+  TEMP_ACCESS
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String
+  name          String
+  role          UserRole  @default(TEAM_MEMBER)
+  isActive      Boolean   @default(true)
+  emailVerified DateTime?
+  lastLoginAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  // Relations
+  profile       Profile?
+  sessions      Session[]
+  ventures      VentureAccess[]
+  projects      ProjectMember[]
+  teamLeads     Team[]    @relation("TeamLead")
+  teamMembers   Team[]    @relation("TeamMember")
+  activities    Activity[]
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+  token        String   @unique
+  expires      DateTime
+  createdAt    DateTime @default(now())
+  lastActivity DateTime @default(now())
+  ipAddress    String?
+  userAgent    String?
+  isValid      Boolean  @default(true)
+}
+
+model Profile {
+  id              String    @id @default(cuid())
+  userId          String    @unique
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  avatar          String?
+  department      String?
+  position        String?
+  phoneNumber     String?
+  bio             String?   @db.Text
+  skills          String[]
+  githubUrl       String?
+  linkedinUrl     String?
+  twoFactorEnabled Boolean  @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model ProjectMember {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  projectName String
+  role      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, projectName])
+}
+
+model Team {
+  id          String   @id @default(cuid())
+  name        String
+  description String?  @db.Text
+  teamLead    User     @relation("TeamLead", fields: [teamLeadId], references: [id])
+  teamLeadId  String
+  members     User[]   @relation("TeamMember")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Activity {
+  id          String   @id @default(cuid())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  type        String
+  description String   @db.Text
+  metadata    Json?
+  createdAt   DateTime @default(now())
+}
+
+model Candidate {
+  id              String       @id @default(cuid())
+  firstName       String
+  lastName        String
+  email           String       @unique
+  phone           String
+  location        String
+  role            String
+  department      String
+  status          String       @default("New") // New, In Review, Interview, Offered, Rejected
+  source          String       @default("Career Website")
+  resumeUrl       String
+  portfolioUrl    String?
+  githubUrl       String?
+  linkedinUrl     String?
+  personalWebsite String?
+  coverLetter     String       @db.Text
+  appliedDate     DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  notifications   Notification[]
+
+  @@map("candidates")
+}
+
+model Notification {
+  id          String    @id @default(cuid())
+  type        String    // NEW_APPLICATION, STATUS_CHANGE, etc.
+  title       String
+  content     String
+  isRead      Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  candidate   Candidate @relation(fields: [candidateId], references: [id])
+  candidateId String
+
+  @@map("notifications")
+}
+
+model VentureAccess {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  ventureName String
+  role      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, ventureName])
+}
