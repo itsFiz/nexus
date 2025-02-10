@@ -5,11 +5,10 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider  = "postgresql"
   url       = env("POSTGRES_PRISMA_URL") // Use pooled connection by default
   directUrl = env("POSTGRES_URL_NON_POOLING") // Use direct connection for migrations
 }
-
 
 enum UserRole {
   FOUNDER
@@ -41,15 +40,16 @@ model User {
   lastLoginAt   DateTime?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  
+
   // Relations
-  profile       Profile?
-  sessions      Session[]
-  ventures      VentureAccess[]
-  projects      ProjectMember[]
-  teamLeads     Team[]    @relation("TeamLead")
-  teamMembers   Team[]    @relation("TeamMember")
-  activities    Activity[]
+  profile          Profile?
+  sessions         Session[]
+  ventures         VentureAccess[]
+  projects         ProjectMember[]
+  teamLeads        Team[]             @relation("TeamLead")
+  teamMembers      Team[]             @relation("TeamMember")
+  activities       Activity[]
+  CompanyEvolution CompanyEvolution[]
 }
 
 model Session {
@@ -66,30 +66,30 @@ model Session {
 }
 
 model Profile {
-  id              String    @id @default(cuid())
-  userId          String    @unique
-  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  avatar          String?
-  department      String?
-  position        String?
-  phoneNumber     String?
-  bio             String?   @db.Text
-  skills          String[]
-  githubUrl       String?
-  linkedinUrl     String?
+  id               String   @id @default(cuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  avatar           String?
+  department       String?
+  position         String?
+  phoneNumber      String?
+  bio              String?  @db.Text
+  skills           String[]
+  githubUrl        String?
+  linkedinUrl      String?
   twoFactorEnabled Boolean  @default(false)
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }
 
 model ProjectMember {
-  id        String   @id @default(cuid())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
+  id          String   @id @default(cuid())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
   projectName String
-  role      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  role        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@unique([userId, projectName])
 }
@@ -116,24 +116,24 @@ model Activity {
 }
 
 model Candidate {
-  id              String       @id @default(cuid())
+  id              String         @id @default(cuid())
   firstName       String
   lastName        String
-  email           String       @unique
+  email           String         @unique
   phone           String
   location        String
   role            String
   department      String
-  status          String       @default("New") // New, In Review, Interview, Offered, Rejected
-  source          String       @default("Career Website")
+  status          String         @default("New") // New, In Review, Interview, Offered, Rejected
+  source          String         @default("Career Website")
   resumeUrl       String
   portfolioUrl    String?
   githubUrl       String?
   linkedinUrl     String?
   personalWebsite String?
-  coverLetter     String       @db.Text
-  appliedDate     DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
+  coverLetter     String         @db.Text
+  appliedDate     DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
   notifications   Notification[]
 
   @@map("candidates")
@@ -141,7 +141,7 @@ model Candidate {
 
 model Notification {
   id          String    @id @default(cuid())
-  type        String    // NEW_APPLICATION, STATUS_CHANGE, etc.
+  type        String // NEW_APPLICATION, STATUS_CHANGE, etc.
   title       String
   content     String
   isRead      Boolean   @default(false)
@@ -153,13 +153,55 @@ model Notification {
 }
 
 model VentureAccess {
-  id        String   @id @default(cuid())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
+  id          String   @id @default(cuid())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
   ventureName String
-  role      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  role        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@unique([userId, ventureName])
+}
+
+// Add to prisma/schema.prisma
+
+model CompanyEvolution {
+  id        String  @id @default(cuid())
+  year      Int
+  structure String
+  valuation String
+  funding   String?
+  status    String
+
+  // Team breakdown
+  teamTotal     Int
+  teamBreakdown Json // Store complex team structure as JSON
+  keyHires      String[] // Array of key hiring positions
+
+  // Financial data
+  revenueTarget    String
+  revenueBreakdown Json
+  burnRate         String
+  runway           String
+
+  // Ventures tracking
+  ventures Json // Store ventures data as JSON
+
+  // Company structure
+  subsidiaries Json // Store subsidiaries data as JSON
+
+  // Equity structure
+  equity Json // Store equity distribution as JSON
+
+  // Other data
+  milestones String[]
+  risks      String[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  createdBy User     @relation(fields: [userId], references: [id])
+  userId    String
+
+  @@unique([year])
 }

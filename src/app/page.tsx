@@ -20,85 +20,6 @@ interface InputFieldProps {
   placeholder: string;
 }
 
-const CustomCursor = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isPointer, setIsPointer] = useState(false);
-  const [isText, setIsText] = useState(false);
-
-  useEffect(() => {
-    // Hide cursor on all elements
-    const style = document.createElement('style');
-    style.textContent = `
-      * {
-        cursor: none !important;
-      }
-      input, textarea, button, a {
-        cursor: none !important;
-      }
-    `;
-    document.head.appendChild(style);
-    
-    const updateCursor = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
-      
-      const target = e.target as HTMLElement;
-      const computedStyle = window.getComputedStyle(target);
-      
-      // Check for text inputs and buttons
-      setIsText(
-        target.tagName === 'INPUT' ||
-        target.tagName === 'TEXTAREA' ||
-        computedStyle.cursor === 'text'
-      );
-      
-      setIsPointer(
-        computedStyle.cursor === 'pointer' ||
-        target.tagName === 'BUTTON' ||
-        target.tagName === 'A'
-      );
-    };
-
-    window.addEventListener('mousemove', updateCursor);
-    return () => {
-      window.removeEventListener('mousemove', updateCursor);
-      // Remove the style element on cleanup
-      document.head.removeChild(style);
-    };
-  }, []);
-
-  return (
-    <>
-      <motion.div
-        className={`fixed top-0 left-0 w-4 h-4 bg-purple-500 rounded-full mix-blend-screen pointer-events-none z-50 ${
-          isText ? 'opacity-0' : ''
-        }`}
-        animate={{ x: position.x - 8, y: position.y - 8 }}
-        transition={{ type: "tween", ease: "backOut" }}
-      />
-      <motion.div
-        className={`fixed top-0 left-0 w-8 h-8 border-2 border-purple-500 rounded-full mix-blend-screen pointer-events-none z-50 ${
-          isText ? 'opacity-0' : ''
-        }`}
-        animate={{
-          x: position.x - 16,
-          y: position.y - 16,
-          scale: isPointer ? 1.5 : 1,
-        }}
-        transition={{ type: "tween", ease: "backOut" }}
-      />
-      {isText && (
-        <motion.div
-          className="fixed top-0 left-0 w-[2px] h-[20px] bg-white pointer-events-none z-50"
-          animate={{ x: position.x - 1, y: position.y - 10 }}
-          transition={{ type: "tween", ease: "backOut" }}
-        />
-      )}
-    </>
-  );
-};
-
-
-
 const NexusLanding = () => {
   const [showLogin, setShowLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -143,7 +64,6 @@ const NexusLanding = () => {
   return (
     <>
       <LoadingScreen isLoading={isLoading} />
-      <CustomCursor />
       
       <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center">
         {/* Animated Background Gradients */}

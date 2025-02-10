@@ -56,24 +56,41 @@ import {
     const refreshUser = useCallback(async () => {
       try {
         const response = await fetch('/api/auth/session');
+        if (!response.ok) {
+          throw new Error('Session invalid');
+        }
+        
         const data = await response.json();
         
+        if (!data.user) {
+          // If no user data, clear state and redirect to login
+          setState(prev => ({ 
+            ...prev, 
+            user: null,
+            error: null,
+            isLoading: false
+          }));
+          router.push('/');
+          return;
+        }
+
         setState(prev => ({ 
           ...prev, 
-          user: data.user || null,
-          error: null 
+          user: data.user,
+          error: null,
+          isLoading: false
         }));
       } catch (error) {
         console.error('Failed to refresh user:', error);
         setState(prev => ({ 
           ...prev, 
           user: null,
-          error: 'Failed to refresh session'
+          error: 'Failed to refresh session',
+          isLoading: false
         }));
-      } finally {
-        setState(prev => ({ ...prev, isLoading: false }));
+        router.push('/');
       }
-    }, []);
+    }, [router]);
   
     useEffect(() => {
       refreshUser();

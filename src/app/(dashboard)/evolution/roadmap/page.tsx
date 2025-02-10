@@ -6,12 +6,20 @@ import {
   Clock, DollarSign,
   ArrowUpRight,
   LucideIcon,
+  Package,
 } from 'lucide-react';
+import roadmapData from '@/lib/validators/data/evolution';
+import { 
+  PieChart, Pie, Cell, 
+  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
+  AreaChart, Area, Legend, CartesianGrid
+} from 'recharts';
+import Image from 'next/image';
 
-type YearKey = keyof typeof roadmapData;
+type YearKey = '2025' | '2026' | '2028' | '2030' | '2040';
 
 type RoadmapData = {
-  [key: string]: {
+  [key in YearKey]: {
     structure: string;
     valuation: string;
     funding: string;
@@ -36,37 +44,26 @@ type RoadmapData = {
     ventures: {
       [key: string]: {
         status: string;
-        [key: string]: string;
+        users?: string;
+        revenue?: string;
+        stage?: string;
+        [key: string]: string | undefined;
       };
     };
-    milestones: string[];
-    risks: string[];
-    divisions?: Array<{
+    subsidiaries: Array<{
       name: string;
       revenue: string;
-      team: string;
-      projects: string;
-    }>;
-    subsidiaries?: Array<{
-      name: string;
-      valuation?: string;
-      revenue?: string;
-      stage?: string;
-      description?: string;
+      stage: string;
       ventures?: Array<{
         name: string;
-        valuation: string;
         revenue: string;
-        stage: string;
+        valuation?: string;
+        stage?: string;
       }>;
       units?: Array<{
         name: string;
-        revenue?: string;
-        ventures?: Array<{
-          name: string;
-          revenue: string;
-          stage?: string;
-        }>;
+        revenue: string;
+        stage?: string;
       }>;
     }>;
     equity: {
@@ -75,498 +72,9 @@ type RoadmapData = {
       esop: string;
       details: string;
     };
+    milestones: string[];
+    risks: string[];
   };
-};
-
-const roadmapData: RoadmapData = {
-  '2024': {
-    structure: "Sole Proprietorship",
-    valuation: "RM 2M",
-    funding: "Bootstrapped",
-    status: "Bootstrapped",
-    team: {
-      total: 5,
-      breakdown: { tech: 3, creative: 1, business: 1 },
-      keyHires: ["CTO", "Lead Developer"]
-    },
-    financials: {
-      revenue: {
-        target: "RM 500K",
-        breakdown: {
-          consulting: "RM 300K",
-          products: "RM 200K"
-        }
-      },
-      burnRate: "RM 30K/month",
-      runway: "12 months"
-    },
-    ventures: {
-      CareerRPG: { status: "Development", users: "1K", focus: "MVP" },
-      ServisLah: { status: "Development", focus: "Market Research" }
-    },
-    equity: {
-      founders: "100%",
-      investors: "0%",
-      esop: "0%",
-      details: "Bootstrapped"
-    },
-    milestones: [
-      "MVP Launch",
-      "Initial Traction",
-      "Core Team Formation",
-      "Market Validation"
-    ],
-    risks: [
-      "Product-Market Fit",
-      "Cash Flow",
-      "Team Building"
-    ],
-    divisions: [
-      {
-        name: "Web Development",
-        revenue: "RM 300K",
-        team: "3 members",
-        projects: "4 active"
-      },
-      {
-        name: "Digital Marketing",
-        revenue: "RM 200K",
-        team: "2 members",
-        projects: "3 active"
-      }
-    ]
-  },
-  '2025': {
-    structure: "Sdn Bhd",
-    valuation: "RM 5M",
-    funding: "Pre-seed RM 1M",
-    status: "Pre-seed",
-    team: {
-      total: 8,
-      breakdown: { tech: 4, creative: 2, business: 2 },
-      keyHires: ["Product Manager", "UI/UX Lead"]
-    },
-    financials: {
-      revenue: {
-        target: "RM 1M",
-        breakdown: {
-          products: "RM 600K",
-          services: "RM 400K"
-        }
-      },
-      burnRate: "RM 50K/month",
-      runway: "18 months"
-    },
-    ventures: {
-      CareerRPG: { status: "Beta", users: "5K", revenue: "RM 100K" },
-      ServisLah: { status: "MVP", pilot: "2 cities" }
-    },
-    equity: {
-      founders: "85%",
-      investors: "10%",
-      esop: "5%",
-      details: "Pre-seed Round"
-    },
-    milestones: [
-      "Company Incorporation",
-      "Pre-seed Funding",
-      "Team Expansion",
-      "Beta Launch"
-    ],
-    risks: [
-      "Market Adoption",
-      "Runway Management",
-      "Technical Scalability"
-    ],
-    divisions: [
-      {
-        name: "Web Development",
-        revenue: "RM 500K",
-        team: "4 members",
-        projects: "6 active"
-      },
-      {
-        name: "Digital Marketing",
-        revenue: "RM 300K",
-        team: "3 members",
-        projects: "5 active"
-      },
-      {
-        name: "Product Development",
-        revenue: "RM 200K",
-        team: "3 members",
-        projects: "CareerRPG MVP"
-      }
-    ]
-  },
-  '2026': {
-    structure: "Sdn Bhd",
-    valuation: "RM 15M",
-    funding: "Seed Round RM 5M",
-    status: "Seed Round",
-    team: {
-      total: 15,
-      breakdown: { tech: 8, creative: 4, business: 3 },
-      keyHires: ["CMO", "Senior Engineers"]
-    },
-    financials: {
-      revenue: {
-        target: "RM 2.5M",
-        breakdown: {
-          products: "RM 1.5M",
-          services: "RM 1M"
-        }
-      },
-      burnRate: "RM 100K/month",
-      runway: "24 months"
-    },
-    ventures: {
-      CareerRPG: { status: "Growth", users: "20K", revenue: "RM 500K" },
-      ServisLah: { status: "Expansion", revenue: "RM 200K" },
-      Blanjer: { status: "Development", focus: "Fintech Solutions" }
-    },
-    equity: {
-      founders: "75%",
-      investors: "15%",
-      esop: "10%",
-      details: "Seed Round"
-    },
-    milestones: [
-      "Seed Funding",
-      "Product Scaling",
-      "Market Expansion",
-      "Revenue Growth"
-    ],
-    risks: [
-      "Scaling Operations",
-      "Market Competition",
-      "Team Growth"
-    ],
-    subsidiaries: [
-      {
-        name: "NexzGen Digital",
-        revenue: "RM 2M ARR",
-        stage: "Growth",
-        units: [
-          {
-            name: "Web Solutions",
-            revenue: "RM 1.2M ARR"
-          },
-          {
-            name: "Digital Marketing",
-            revenue: "RM 800K ARR"
-          }
-        ]
-      },
-      {
-        name: "NexzGen Products",
-        revenue: "RM 500K ARR",
-        stage: "Early Growth",
-        units: [
-          {
-            name: "CareerRPG",
-            revenue: "RM 300K ARR",
-          },
-          {
-            name: "ServisLah",
-            revenue: "RM 200K ARR",
-          }
-        ]
-      }
-    ]
-  },
-  '2028': {
-    structure: "Holdings Sdn Bhd",
-    valuation: "RM 50M",
-    funding: "Series A RM 20M",
-    status: "Series A",
-    team: {
-      total: 35,
-      breakdown: { tech: 20, creative: 8, business: 7 },
-      keyHires: ["COO", "Head of Growth", "Tech Lead"]
-    },
-    financials: {
-      revenue: {
-        target: "RM 8M",
-        breakdown: {
-          products: "RM 5M",
-          services: "RM 3M"
-        }
-      },
-      burnRate: "RM 300K/month",
-      runway: "30 months"
-    },
-    ventures: {
-      CareerRPG: { status: "Scaling", users: "100K", revenue: "RM 3M" },
-      ServisLah: { status: "Regional", revenue: "RM 1M" },
-      Blanjer: { status: "Launch", revenue: "RM 500K" }
-    },
-    subsidiaries: [
-      {
-        name: "NexzGen Studios",
-        valuation: "RM 30M",
-        revenue: "RM 5M ARR",
-        stage: "Growth",
-        ventures: [
-          {
-            name: "CareerRPG",
-            valuation: "RM 40M",
-            revenue: "RM 3M ARR",
-            stage: "Series A"
-          },
-          {
-            name: "ServisLah",
-            valuation: "RM 15M",
-            revenue: "RM 1M ARR",
-            stage: "Seed"
-          }
-        ]
-      },
-      {
-        name: "NexzGen Labs",
-        revenue: "RM 3M ARR",
-        stage: "Growth"
-      }
-    ],
-    equity: {
-      founders: "60%",
-      investors: "30%",
-      esop: "10%",
-      details: "Series A"
-    },
-    milestones: [
-      "Series A Funding",
-      "Regional Expansion",
-      "Corporate Restructuring",
-      "Product Portfolio Growth"
-    ],
-    risks: [
-      "Market Competition",
-      "Talent Retention",
-      "Operational Scaling"
-    ]
-  },
-  '2030': {
-    structure: "IPO Preparation",
-    valuation: "RM 2B",
-    funding: "Pre-IPO Round RM 500M",
-    status: "Pre-IPO",
-    team: {
-      total: 500,
-      breakdown: {
-        tech: 250,
-        creative: 120,
-        business: 110,
-        operations: 20
-      },
-      keyHires: [
-        "Board of Directors",
-        "IPO Advisory Team",
-        "Investor Relations Head"
-      ]
-    },
-    financials: {
-      revenue: {
-        target: "RM 300M ARR",
-        breakdown: {
-          products: "RM 200M",
-          services: "RM 100M"
-        }
-      },
-      burnRate: "RM 5M/month",
-      runway: "60 months"
-    },
-    ventures: {
-      CareerRPG: {
-        status: "Market Leader",
-        users: "2M",
-        revenue: "RM 150M ARR"
-      },
-      ServisLah: {
-        status: "Series C",
-        revenue: "RM 80M ARR"
-      },
-      Blanjer: {
-        status: "Series B",
-        revenue: "RM 50M ARR"
-      }
-    },
-    milestones: [
-      "IPO Documentation",
-      "Global Structure Setup",
-      "Market Leadership",
-      "Innovation Centers"
-    ],
-    risks: [
-      "Market Conditions",
-      "Regulatory Compliance",
-      "Global Competition"
-    ],
-    subsidiaries: [
-      {
-        name: "Entertainment Division",
-        units: [
-          {
-            name: "NexzGen Animation Studios",
-            revenue: "RM 100M ARR"
-          },
-          {
-            name: "NexzGen Games",
-            revenue: "RM 50M ARR"
-          }
-        ]
-      },
-      {
-        name: "Technology Division",
-        units: [
-          {
-            name: "NexzGen R&D",
-            ventures: [
-              {
-                name: "CareerRPG Global",
-                revenue: "RM 200M ARR",
-                stage: "Series C"
-              },
-              {
-                name: "ServisLah International",
-                revenue: "RM 80M ARR",
-                stage: "Series B"
-              }
-            ]
-          },
-          {
-            name: "NexzGen Labs",
-            revenue: "RM 30M ARR"
-          }
-        ]
-      }
-    ],
-    equity: {
-      founders: "55%",
-      investors: "35%",
-      esop: "10%",
-      details: "Series B & C"
-    }
-  },
-  '2040': {
-    structure: "KLSE:NXGN",
-    valuation: "RM 10B",
-    funding: "Sustainable Growth",
-    status: "Market Leader",
-    team: {
-      total: 2000,
-      breakdown: {
-        tech: 1000,
-        creative: 500,
-        business: 400,
-        operations: 100
-      },
-      keyHires: [
-        "AI Research Directors",
-        "Sustainability Officers",
-        "Innovation Leaders"
-      ]
-    },
-    financials: {
-      revenue: {
-        target: "RM 2B ARR",
-        breakdown: {
-          technology: "RM 800M",
-          entertainment: "RM 600M",
-          education: "RM 400M",
-          financial: "RM 200M"
-        }
-      },
-      burnRate: "RM 20M/month",
-      runway: "Sustainable"
-    },
-    ventures: {
-      CareerRPG: {
-        status: "Industry Standard",
-        users: "20M",
-        revenue: "RM 1B ARR"
-      },
-      ServisLah: {
-        status: "Global Platform",
-        revenue: "RM 600M ARR"
-      },
-      Blanjer: {
-        status: "Global Fintech",
-        revenue: "RM 400M ARR"
-      }
-    },
-    milestones: [
-      "Global Innovation Leader",
-      "Sustainable Tech Pioneer",
-      "Next-Gen Tech Development",
-      "Industry Standards Creation"
-    ],
-    risks: [
-      "Technological Disruption",
-      "Global Economic Changes",
-      "Regulatory Evolution"
-    ],
-    subsidiaries: [
-      {
-        name: "Entertainment Division",
-        units: [
-          {
-            name: "NexzGen Animation Studios",
-            revenue: "RM 400M ARR"
-          },
-          {
-            name: "NexzGen TV",
-            revenue: "RM 200M ARR"
-          },
-          {
-            name: "NexzGen Games",
-            revenue: "RM 300M ARR"
-          },
-          {
-            name: "NexzGen Esports",
-            revenue: "RM 100M ARR"
-          }
-        ]
-      },
-      {
-        name: "Technology Division",
-        units: [
-          {
-            name: "NexzGen R&D",
-            ventures: [
-              {
-                name: "CareerRPG Global",
-                revenue: "RM 500M ARR"
-              },
-              {
-                name: "ServisLah International",
-                revenue: "RM 300M ARR"
-              },
-              {
-                name: "Blanjer Fintech",
-                revenue: "RM 200M ARR"
-              }
-            ]
-          },
-          {
-            name: "NexzGen Labs",
-            revenue: "RM 200M ARR"
-          }
-        ]
-      },
-      {
-        name: "Venture Division",
-        description: "Investment arm for new ventures and startups",
-        revenue: "RM 2B AUM"
-      }
-    ],
-    equity: {
-      founders: "30%",
-      investors: "60%",
-      esop: "10%",
-      details: "Public Listed"
-    }
-  }
 };
 
 type Venture = {
@@ -580,6 +88,12 @@ type Unit = {
   name: string;
   revenue?: string;
   ventures?: Venture[];
+};
+
+const COLORS = ['#9333ea', '#60a5fa', '#4ade80', '#f87171', '#facc15'];
+
+const formatCurrency = (value: string) => {
+  return parseInt(value.replace(/[^0-9]/g, ''));
 };
 
 const EvolutionRoadmap = () => {
@@ -627,18 +141,43 @@ const EvolutionRoadmap = () => {
   }) => (
     <div className="bg-gray-900 border border-white/10 rounded-xl p-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold">{name}</h3>
-        <span className={`px-3 py-1 rounded-full text-sm ${
+        <div className="flex items-center gap-3">
+          {/* Logo or default icon */}
+          <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-white/5">
+            {data.logo ? (
+              <Image
+                src={data.logo as string}
+                alt={`${name} logo`}
+                width={32}
+                height={32}
+                className="rounded"
+              />
+            ) : (
+              <Package className="w-6 h-6 text-purple-400" />
+            )}
+          </div>
+          <h3 className="text-lg font-semibold">{name}</h3>
+        </div>
+        <span className={`px-3 py-1 rounded-full text-sm flex items-center gap-2 ${
           data.status === 'MVP Launch' ? 'bg-purple-400/10 text-purple-400' :
           data.status === 'Development' ? 'bg-blue-400/10 text-blue-400' :
-          'bg-green-400/10 text-green-400'
+          data.status === 'Not Started' ? 'bg-gray-400/10 text-gray-400' :
+          data.status === 'Beta' ? 'bg-green-400/10 text-green-400' :
+          data.status === 'Live' ? 'bg-emerald-400/10 text-emerald-400' :
+          'bg-yellow-400/10 text-yellow-400'
         }`}>
+          {data.status === 'Live' && (
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+            </span>
+          )}
           {data.status}
         </span>
       </div>
       <div className="space-y-2">
         {Object.entries(data).map(([key, value]) => {
-          if (key === 'status') return null;
+          if (key === 'status' || key === 'logo') return null;
           return (
             <div key={key} className="flex justify-between text-sm">
               <span className="text-gray-400 capitalize">{key}:</span>
@@ -708,6 +247,61 @@ const EvolutionRoadmap = () => {
     </motion.div>
   );
 
+  const renderTeamMember = (member: { name: string; role: string; image?: string }) => (
+    <div className="flex items-center space-x-4 bg-gray-800/50 p-4 rounded-lg">
+      <Image
+        src={member.image || '/images/profiledefault.jpg'} 
+        alt={member.name}
+        width={48}
+        height={48}
+        className="rounded-full"
+      />
+      <div>
+        <div className="text-gray-200 font-medium">{member.name}</div>
+        <div className="text-sm text-gray-400">{member.role}</div>
+      </div>
+    </div>
+  );
+
+  const renderTeamBreakdown = (category: string, roles: { [key: string]: { members?: Array<{ name: string; role: string; image?: string }> } }) => (
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      className="bg-gray-900 border border-white/10 p-6 rounded-xl border-l-4 border-l-violet-500 mb-4"
+    >
+      <h3 className="font-semibold text-lg text-gray-200 capitalize mb-4">{category}</h3>
+      {Object.entries(roles).map(([role, { members = [] }]) => (
+        <div key={role} className="mb-4">
+          <h4 className="text-gray-400 capitalize mb-3">{role}</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {members?.map((member, idx) => (
+              <div key={idx}>
+                {renderTeamMember(member)}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </motion.div>
+  );
+
+  // Transform nested breakdown data for the pie chart
+  const getTeamBreakdownData = () => {
+    const breakdown = roadmapData[selectedYear].team.breakdown;
+    const data: { name: string; value: number }[] = [];
+    
+    Object.entries(breakdown).forEach(([category, roles]) => {
+      Object.entries(roles).forEach(([role, count]) => {
+        data.push({
+          name: `${category} ${role}`,
+          value: count
+        });
+      });
+    });
+    
+    return data;
+  };
+
   return (
     <div className="min-h-screen p-6">
       <div className="max-w-7xl mx-auto space-y-6">
@@ -734,9 +328,11 @@ const EvolutionRoadmap = () => {
           </div>
         </div>
 
-        {/* Overview Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Overview Cards - Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
+          {/* Structure Card - Spans 4 columns */}
           <motion.div
+            className="md:col-span-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
@@ -748,7 +344,10 @@ const EvolutionRoadmap = () => {
               subValue: roadmapData[selectedYear].status
             })}
           </motion.div>
+
+          {/* Valuation Card - Spans 2 columns */}
           <motion.div
+            className="md:col-span-2"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
@@ -760,7 +359,10 @@ const EvolutionRoadmap = () => {
               subValue: roadmapData[selectedYear].funding || 'N/A'
             })}
           </motion.div>
+
+          {/* Team Size Card - Spans 3 columns */}
           <motion.div
+            className="md:col-span-3"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
@@ -769,10 +371,19 @@ const EvolutionRoadmap = () => {
               icon: Users,
               label: "Team Size",
               value: roadmapData[selectedYear].team.total,
-              subValue: `${roadmapData[selectedYear].team.breakdown.tech} Tech / ${roadmapData[selectedYear].team.breakdown.creative} Creative`
+              subValue: (() => {
+                const coFounders = Object.values((roadmapData[selectedYear].team.breakdown as any).coFounders || {})
+                  .reduce((total, dept: any) => total + (dept.members?.length || 0), 0);
+                const interns = Object.values((roadmapData[selectedYear].team.breakdown as any).interns || {})
+                  .reduce((total, dept: any) => total + (dept.members?.length || 0), 0);
+                return `${coFounders} Co-Founders / ${interns} Interns`;
+              })()
             })}
           </motion.div>
+
+          {/* Revenue Target Card - Spans 3 columns */}
           <motion.div
+            className="md:col-span-3"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
@@ -806,148 +417,275 @@ const EvolutionRoadmap = () => {
         </div>
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column */}
-          <div className="lg:col-span-2 space-y-6">
-            {selectedTab === 'overview' && (
+        <div className="space-y-6">
+          {selectedTab === 'overview' && (
+            <div className="bg-gray-900 border border-white/10 rounded-xl p-6">
+              <h3 className="text-lg font-semibold mb-4">Stage Overview</h3>
+              <div className="space-y-6">
+                {/* Milestones */}
+                <div>
+                  <h4 className="text-sm font-medium text-gray-400 mb-3">Key Milestones</h4>
+                  <div className="space-y-3">
+                    {roadmapData[selectedYear].milestones.map((milestone, index) => (
+                      <div key={index} className="flex items-center gap-3">
+                        <div className="w-2 h-2 rounded-full bg-violet-500" />
+                        <span className="text-gray-300">{milestone}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Revenue Breakdown */}
+                <div>
+                  <h4 className="text-sm font-medium text-gray-400 mb-3">Revenue Breakdown</h4>
+                  <div className="grid grid-cols-2 gap-4">
+                    {Object.entries(roadmapData[selectedYear].financials.revenue.breakdown).map(([category, amount]) => (
+                      <div key={category} className="bg-gray-800/50 p-4 rounded-lg">
+                        <div className="text-sm text-gray-400 capitalize">{category}</div>
+                        <div className="text-lg font-semibold text-gray-200">{amount}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Equity Dilution */}
+                <div className="mt-6">
+                  <h4 className="text-sm font-medium text-gray-400 mb-3">Equity Distribution</h4>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="bg-gray-800/50 p-4 rounded-lg">
+                      <div className="text-sm text-gray-400">Founders</div>
+                      <div className="text-lg font-semibold text-violet-400">{roadmapData[selectedYear].equity.founders}</div>
+                    </div>
+                    <div className="bg-gray-800/50 p-4 rounded-lg">
+                      <div className="text-sm text-gray-400">Investors</div>
+                      <div className="text-lg font-semibold text-blue-400">{roadmapData[selectedYear].equity.investors}</div>
+                    </div>
+                    <div className="bg-gray-800/50 p-4 rounded-lg">
+                      <div className="text-sm text-gray-400">ESOP</div>
+                      <div className="text-lg font-semibold text-green-400">{roadmapData[selectedYear].equity.esop}</div>
+                    </div>
+                  </div>
+                  <div className="mt-2 text-sm text-gray-400 italic">
+                    {roadmapData[selectedYear].equity.details}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {selectedTab === 'ventures' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Object.entries(roadmapData[selectedYear].ventures).map(([name, data]) => (
+                <div key={name}>
+                  {renderVentureCard(name, data as { status: string; [key: string]: string | number })}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {selectedTab === 'team' && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {Object.entries(roadmapData[selectedYear].team.breakdown).map(([category, roles], index) => (
+                <div key={`${category}-${index}`}>
+                  {typeof roles === 'object' ? renderTeamBreakdown(category, roles) : null}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {selectedTab === 'financials' && (
+            <div className="space-y-6">
+              {/* Revenue Overview */}
               <div className="bg-gray-900 border border-white/10 rounded-xl p-6">
-                <h3 className="text-lg font-semibold mb-4">Stage Overview</h3>
-                <div className="space-y-6">
-                  {/* Milestones */}
-                  <div>
-                    <h4 className="text-sm font-medium text-gray-400 mb-3">Key Milestones</h4>
-                    <div className="space-y-3">
-                      {roadmapData[selectedYear].milestones.map((milestone, index) => (
-                        <div key={index} className="flex items-center gap-3">
-                          <div className="w-2 h-2 rounded-full bg-violet-500" />
-                          <span className="text-gray-300">{milestone}</span>
-                        </div>
+                <h3 className="text-lg font-semibold mb-6">Revenue Breakdown</h3>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart
+                    data={Object.entries(roadmapData[selectedYear].financials.revenue.breakdown).map(([key, value]) => ({
+                      name: key,
+                      value: formatCurrency(value)
+                    }))}
+                    margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                    <XAxis dataKey="name" stroke="#9ca3af" />
+                    <YAxis stroke="#9ca3af" />
+                    <Tooltip 
+                      contentStyle={{ background: '#1f2937', border: 'none' }}
+                      formatter={(value: number) => [`RM ${value}K`, 'Revenue']}
+                    />
+                    <Bar dataKey="value" fill="#9333ea" radius={[4, 4, 0, 0]}>
+                      {Object.entries(roadmapData[selectedYear].financials.revenue.breakdown).map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
-                    </div>
-                  </div>
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
 
-                  {/* Revenue Breakdown */}
-                  <div>
-                    <h4 className="text-sm font-medium text-gray-400 mb-3">Revenue Breakdown</h4>
-                    <div className="grid grid-cols-2 gap-4">
-                      {Object.entries(roadmapData[selectedYear].financials.revenue.breakdown).map(([category, amount]) => (
-                        <div key={category} className="bg-gray-800/50 p-4 rounded-lg">
-                          <div className="text-sm text-gray-400 capitalize">{category}</div>
-                          <div className="text-lg font-semibold text-gray-200">{amount}</div>
-                        </div>
-                      ))}
-                    </div>
+              {/* Financial Metrics */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-gray-900 border border-white/10 rounded-xl p-6">
+                  <h4 className="text-sm font-medium text-gray-400 mb-2">Monthly Burn Rate</h4>
+                  <div className="text-2xl font-semibold text-gray-200">
+                    {roadmapData[selectedYear].financials.burnRate}
                   </div>
-
-                  {/* Equity Dilution */}
-                  <div className="mt-6">
-                    <h4 className="text-sm font-medium text-gray-400 mb-3">Equity Distribution</h4>
-                    <div className="grid grid-cols-3 gap-4">
-                      <div className="bg-gray-800/50 p-4 rounded-lg">
-                        <div className="text-sm text-gray-400">Founders</div>
-                        <div className="text-lg font-semibold text-violet-400">{roadmapData[selectedYear].equity.founders}</div>
-                      </div>
-                      <div className="bg-gray-800/50 p-4 rounded-lg">
-                        <div className="text-sm text-gray-400">Investors</div>
-                        <div className="text-lg font-semibold text-blue-400">{roadmapData[selectedYear].equity.investors}</div>
-                      </div>
-                      <div className="bg-gray-800/50 p-4 rounded-lg">
-                        <div className="text-sm text-gray-400">ESOP</div>
-                        <div className="text-lg font-semibold text-green-400">{roadmapData[selectedYear].equity.esop}</div>
-                      </div>
-                    </div>
-                    <div className="mt-2 text-sm text-gray-400 italic">
-                      {roadmapData[selectedYear].equity.details}
+                  <div className="mt-4">
+                    <div className="w-full bg-gray-800 rounded-full h-2.5">
+                      <div className="bg-red-500 h-2.5 rounded-full" style={{ width: '70%' }}></div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
 
-            {selectedTab === 'structure' && (
-              <div className="bg-gray-900 border border-white/10 rounded-xl p-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-white/5 rounded-lg">
-                    <Building2 className="w-5 h-5 text-purple-400" />
+                <div className="bg-gray-900 border border-white/10 rounded-xl p-6">
+                  <h4 className="text-sm font-medium text-gray-400 mb-2">Runway</h4>
+                  <div className="text-2xl font-semibold text-gray-200">
+                    {roadmapData[selectedYear].financials.runway}
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold">{roadmapData[selectedYear].structure}</h3>
-                    <p className="text-sm text-gray-400">Current corporate structure and divisions</p>
+                  <div className="mt-4">
+                    <div className="w-full bg-gray-800 rounded-full h-2.5">
+                      <div className="bg-green-500 h-2.5 rounded-full" style={{ width: '60%' }}></div>
+                    </div>
                   </div>
                 </div>
 
-                <div className="space-y-6">
-                  {roadmapData[selectedYear].divisions?.map((division, index) => (
-                    <div key={index} className="mb-4">
-                      {renderEntityCard(division)}
+                <div className="bg-gray-900 border border-white/10 rounded-xl p-6">
+                  <h4 className="text-sm font-medium text-gray-400 mb-2">Revenue Target</h4>
+                  <div className="text-2xl font-semibold text-gray-200">
+                    {roadmapData[selectedYear].financials.revenue.target}
+                  </div>
+                  <div className="mt-4">
+                    <div className="w-full bg-gray-800 rounded-full h-2.5">
+                      <div className="bg-blue-500 h-2.5 rounded-full" style={{ width: '85%' }}></div>
                     </div>
-                  ))}
-                  {roadmapData[selectedYear].subsidiaries?.map((subsidiary, index) => (
-                    <div key={index} className="mb-4">
-                      {renderEntityCard(subsidiary)}
-                    </div>
-                  ))}
+                  </div>
                 </div>
               </div>
-            )}
-          </div>
 
-          {/* Right Column */}
-          <div className="lg:col-span-1 space-y-6">
-            {selectedTab === 'ventures' && (
+              {/* Growth Trend */}
               <div className="bg-gray-900 border border-white/10 rounded-xl p-6">
-                {renderVentureCard('CareerRPG', roadmapData[selectedYear].ventures.CareerRPG)}
-                {renderVentureCard('ServisLah', roadmapData[selectedYear].ventures.ServisLah)}
-                {'Blanjer' in roadmapData[selectedYear].ventures && 
-                  renderVentureCard('Blanjer', roadmapData[selectedYear].ventures.Blanjer)}
+                <h3 className="text-lg font-semibold mb-6">Financial Growth</h3>
+                <ResponsiveContainer width="100%" height={300}>
+                  <AreaChart
+                    data={Object.keys(roadmapData).map(year => ({
+                      year,
+                      revenue: formatCurrency(roadmapData[year as YearKey].financials.revenue.target),
+                      burn: formatCurrency(roadmapData[year as YearKey].financials.burnRate)
+                    }))}
+                    margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+                  >
+                    <defs>
+                      <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#9333ea" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="#9333ea" stopOpacity={0}/>
+                      </linearGradient>
+                      <linearGradient id="colorBurn" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#ef4444" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                    <XAxis dataKey="year" stroke="#9ca3af" />
+                    <YAxis stroke="#9ca3af" />
+                    <Tooltip 
+                      contentStyle={{ background: '#1f2937', border: 'none' }}
+                      formatter={(value: number) => [`RM ${value}K`, '']}
+                    />
+                    <Legend />
+                    <Area 
+                      type="monotone" 
+                      dataKey="revenue" 
+                      stroke="#9333ea" 
+                      fillOpacity={1} 
+                      fill="url(#colorRevenue)" 
+                      name="Revenue Target"
+                    />
+                    <Area 
+                      type="monotone" 
+                      dataKey="burn" 
+                      stroke="#ef4444" 
+                      fillOpacity={1} 
+                      fill="url(#colorBurn)" 
+                      name="Burn Rate"
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
               </div>
-            )}
-            {selectedTab === 'team' && (
-              <div className="bg-gray-900 border border-white/10 rounded-xl p-6">
-                <h3 className="text-lg font-semibold mb-4">Team Breakdown</h3>
-                <div className="space-y-6">
-                  {Object.entries(roadmapData[selectedYear].team.breakdown).map(([role, count]) => (
-                    <div key={role} className="flex justify-between text-sm">
-                      <span className="text-gray-400 capitalize">{role}:</span>
-                      <span className="font-medium text-gray-200">{count}</span>
-                    </div>
-                  ))}
+            </div>
+          )}
+
+          {selectedTab === 'risks' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {roadmapData[selectedYear].risks.map((risk, index) => (
+                <div key={index} className="bg-gray-900 border border-white/10 rounded-xl p-6">
+                  <span className="text-gray-400">{risk}</span>
                 </div>
-              </div>
-            )}
-            {selectedTab === 'financials' && (
-              <div className="bg-gray-900 border border-white/10 rounded-xl p-6">
-                <h3 className="text-lg font-semibold mb-4">Financial Overview</h3>
-                <div className="space-y-6">
-                  {renderMetricCard({
-                    icon: DollarSign,
-                    label: "Revenue Target",
-                    value: roadmapData[selectedYear].financials.revenue.target,
-                    subValue: `Burn: ${roadmapData[selectedYear].financials.burnRate}`
-                  })}
-                  {renderMetricCard({
-                    icon: Clock,
-                    label: "Runway",
-                    value: roadmapData[selectedYear].financials.runway,
-                    subValue: roadmapData[selectedYear].financials.revenue.target
-                  })}
+              ))}
+            </div>
+          )}
+
+          {selectedTab === 'structure' && (
+            <div className="space-y-6">
+              {roadmapData[selectedYear].subsidiaries?.map((subsidiary, index) => (
+                <div key={index}>
+                  {renderEntityCard(subsidiary)}
                 </div>
-              </div>
-            )}
-            {selectedTab === 'risks' && (
-              <div className="bg-gray-900 border border-white/10 rounded-xl p-6">
-                <h3 className="text-lg font-semibold mb-4">Risks</h3>
-                <div className="space-y-6">
-                  {roadmapData[selectedYear].risks.map((risk, index) => (
-                    <div key={index} className="flex justify-between text-sm">
-                      <span className="text-gray-400 capitalize">{risk}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
+
+        {selectedTab === 'overview' && (
+          <div className="bg-gray-900 border border-white/10 rounded-xl p-6 mt-6">
+            <h3 className="text-lg font-semibold mb-6">Growth Trajectory</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <AreaChart
+                data={Object.keys(roadmapData).map(year => ({
+                  year,
+                  team: roadmapData[year as YearKey].team.total,
+                  revenue: formatCurrency(roadmapData[year as YearKey].financials.revenue.target)
+                }))}
+                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+              >
+                <defs>
+                  <linearGradient id="colorTeam" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#9333ea" stopOpacity={0.8}/>
+                    <stop offset="95%" stopColor="#9333ea" stopOpacity={0}/>
+                  </linearGradient>
+                  <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#60a5fa" stopOpacity={0.8}/>
+                    <stop offset="95%" stopColor="#60a5fa" stopOpacity={0}/>
+                  </linearGradient>
+                </defs>
+                <XAxis dataKey="year" stroke="#9ca3af" />
+                <YAxis stroke="#9ca3af" />
+                <Tooltip 
+                  contentStyle={{ background: '#1f2937', border: 'none' }}
+                  formatter={(value: number, name: string) => [
+                    name === 'team' ? `${value} members` : `RM ${value}K`,
+                    name === 'team' ? 'Team Size' : 'Revenue Target'
+                  ]}
+                />
+                <Legend />
+                <Area 
+                  type="monotone" 
+                  dataKey="team" 
+                  stroke="#9333ea" 
+                  fillOpacity={1} 
+                  fill="url(#colorTeam)" 
+                  name="Team Size"
+                />
+                <Area 
+                  type="monotone" 
+                  dataKey="revenue" 
+                  stroke="#60a5fa" 
+                  fillOpacity={1} 
+                  fill="url(#colorRevenue)" 
+                  name="Revenue Target"
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        )}
       </div>
     </div>
   );
