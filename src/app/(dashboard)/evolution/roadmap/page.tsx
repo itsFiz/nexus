@@ -3,14 +3,14 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Building2, TrendingUp, Users, Wallet,
-  Clock, DollarSign,
+  
   ArrowUpRight,
   LucideIcon,
   Package,
 } from 'lucide-react';
 import roadmapData from '@/lib/validators/data/evolution';
 import { 
-  PieChart, Pie, Cell, 
+   Cell, 
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
   AreaChart, Area, Legend, CartesianGrid
 } from 'recharts';
@@ -18,64 +18,64 @@ import Image from 'next/image';
 
 type YearKey = '2025' | '2026' | '2028' | '2030' | '2040';
 
-type RoadmapData = {
-  [key in YearKey]: {
-    structure: string;
-    valuation: string;
-    funding: string;
-    status: string;
-    team: {
-      total: number;
-      breakdown: {
-        [key: string]: number;
-      };
-      keyHires: string[];
-    };
-    financials: {
-      revenue: {
-        target: string;
-        breakdown: {
-          [key: string]: string;
-        };
-      };
-      burnRate: string;
-      runway: string;
-    };
-    ventures: {
-      [key: string]: {
-        status: string;
-        users?: string;
-        revenue?: string;
-        stage?: string;
-        [key: string]: string | undefined;
-      };
-    };
-    subsidiaries: Array<{
-      name: string;
-      revenue: string;
-      stage: string;
-      ventures?: Array<{
-        name: string;
-        revenue: string;
-        valuation?: string;
-        stage?: string;
-      }>;
-      units?: Array<{
-        name: string;
-        revenue: string;
-        stage?: string;
-      }>;
-    }>;
-    equity: {
-      founders: string;
-      investors: string;
-      esop: string;
-      details: string;
-    };
-    milestones: string[];
-    risks: string[];
-  };
-};
+// type RoadmapData = {
+//   [key in YearKey]: {
+//     structure: string;
+//     valuation: string;
+//     funding: string;
+//     status: string;
+//     team: {
+//       total: number;
+//       breakdown: {
+//         [key: string]: number;
+//       };
+//       keyHires: string[];
+//     };
+//     financials: {
+//       revenue: {
+//         target: string;
+//         breakdown: {
+//           [key: string]: string;
+//         };
+//       };
+//       burnRate: string;
+//       runway: string;
+//     };
+//     ventures: {
+//       [key: string]: {
+//         status: string;
+//         users?: string;
+//         revenue?: string;
+//         stage?: string;
+//         [key: string]: string | undefined;
+//       };
+//     };
+//     subsidiaries: Array<{
+//       name: string;
+//       revenue: string;
+//       stage: string;
+//       ventures?: Array<{
+//         name: string;
+//         revenue: string;
+//         valuation?: string;
+//         stage?: string;
+//       }>;
+//       units?: Array<{
+//         name: string;
+//         revenue: string;
+//         stage?: string;
+//       }>;
+//     }>;
+//     equity: {
+//       founders: string;
+//       investors: string;
+//       esop: string;
+//       details: string;
+//     };
+//     milestones: string[];
+//     risks: string[];
+//   };
+// };
 
 type Venture = {
   name: string;
@@ -94,6 +94,25 @@ const COLORS = ['#9333ea', '#60a5fa', '#4ade80', '#f87171', '#facc15'];
 
 const formatCurrency = (value: string) => {
   return parseInt(value.replace(/[^0-9]/g, ''));
+};
+
+// // Add these type definitions
+// type TeamMember = {
+//   name: string;
+//   role: string;
+//   image?: string;
+//   count?: number;
+// };
+
+// type DepartmentRoles = {
+//   [role: string]: {
+//     members?: TeamMember[];
+//     count?: number;
+//   };
+// };
+
+type TeamBreakdown = {
+  [category: string]: number;
 };
 
 const EvolutionRoadmap = () => {
@@ -285,22 +304,22 @@ const EvolutionRoadmap = () => {
     </motion.div>
   );
 
-  // Transform nested breakdown data for the pie chart
-  const getTeamBreakdownData = () => {
-    const breakdown = roadmapData[selectedYear].team.breakdown;
-    const data: { name: string; value: number }[] = [];
+  // // Transform nested breakdown data for the pie chart
+  // const getTeamBreakdownData = () => {
+  //   const breakdown = roadmapData[selectedYear].team.breakdown;
+  //   const data: { name: string; value: number }[] = [];
     
-    Object.entries(breakdown).forEach(([category, roles]) => {
-      Object.entries(roles).forEach(([role, count]) => {
-        data.push({
-          name: `${category} ${role}`,
-          value: count
-        });
-      });
-    });
+  //   Object.entries(breakdown).forEach(([category, roles]) => {
+  //     Object.entries(roles).forEach(([role, count]) => {
+  //       data.push({
+  //         name: `${category} ${role}`,
+  //         value: count
+  //       });
+  //     });
+  //   });
     
-    return data;
-  };
+  //   return data;
+  // };
 
   return (
     <div className="min-h-screen p-6">
@@ -372,10 +391,10 @@ const EvolutionRoadmap = () => {
               label: "Team Size",
               value: roadmapData[selectedYear].team.total,
               subValue: (() => {
-                const coFounders = Object.values((roadmapData[selectedYear].team.breakdown as any).coFounders || {})
-                  .reduce((total, dept: any) => total + (dept.members?.length || 0), 0);
-                const interns = Object.values((roadmapData[selectedYear].team.breakdown as any).interns || {})
-                  .reduce((total, dept: any) => total + (dept.members?.length || 0), 0);
+                const teamBreakdown = roadmapData[selectedYear].team.breakdown as TeamBreakdown;
+                const coFounders = teamBreakdown?.coFounders || 0;
+                const interns = teamBreakdown?.interns || 0;
+                
                 return `${coFounders} Co-Founders / ${interns} Interns`;
               })()
             })}
