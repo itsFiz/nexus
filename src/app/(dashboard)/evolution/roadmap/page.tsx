@@ -15,6 +15,8 @@ import {
   AreaChart, Area, Legend, CartesianGrid
 } from 'recharts';
 import Image from 'next/image';
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 type YearKey = '2025' | '2026' | '2028' | '2030' | '2040';
 
@@ -116,6 +118,17 @@ type TeamBreakdown = {
 };
 
 const EvolutionRoadmap = () => {
+  const { data: session, status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect('/auth/signin');
+    },
+  });
+
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
   const [selectedYear, setSelectedYear] = useState<YearKey>('2025');
   const [selectedTab, setSelectedTab] = useState('overview');
 
