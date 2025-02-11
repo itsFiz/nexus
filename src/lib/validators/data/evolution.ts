@@ -251,62 +251,199 @@ const roadmapData = {
     ]
   },
   '2025': {
-    structure: "NexzGen Studio (Sole Proprietorship) - 4 Divisions",
+    structure: "NexzGen Studio (Sole Proprietorship) - 3 Divisions",
     valuation: "RM 2M",
     funding: "Pre seed RM 200K",
     status: "Pre seed",
 
 
     team: {
-      total: 10,
-      breakdown: { 
-        tech: 4, 
-        creative: 4, 
-        business: 1,
-        operations: 1
+      total: 11,
+      breakdown: {
+        coFounders: {
+          tech: {
+            members: [
+              {
+                name: "Hafiz Kadir",
+                role: "Founder, CEO & CTO (Chief Everything Officer)",
+                image: "/images/cofounders/ceo.png"
+              },
+              {
+                name: "Tengku Amirul Haiqal",
+                role: "CIO - Chief Innovation Officer",
+                image: "/images/cofounders/cio.png"
+
+              }
+            ]
+          },
+
+
+          creative: {
+            members: [
+              {
+                name: "Andi A Ghani",
+                role: "CCO - Chief Creative(Cartoon) Officer",
+                image: "/images/cofounders/cco.png"
+              }
+            ]
+
+
+          },
+
+          business: {
+            members: [
+              {
+                name: "Putera Shazmin",
+                role: "COO - Chief Operation(Overtime) Officer",
+                image: "/images/cofounders/coo.png"
+              }
+            ]
+          },
+          marketing: {
+            members: [
+              {
+                name: "Aliff Farhat",
+                role: "CMO - Chief Marketing(Meme) Officer",
+                image: "/images/cofounders/cmo.png"
+              }
+
+            ]
+          }
+        },
+        advisors: {
+            business: {
+                members: [
+                    {
+                        name: "Andi Aksan",
+                        role: "Head Aftersales - EON",
+                      },
+                ]
+              },
+          tech: {
+            members: [
+             
+              {
+                name: "Hisham Mohamad",
+                role: "Product Manager - Xsolla",
+              },
+              {
+                name: "Haziq Roslan",
+                role: "Product Manager - Digitas Malaysia",
+
+              },
+              {
+                name: "Fatin Syahiera",
+                role: "Product Manager - Mercedes Benz",
+
+              },
+            ]
+          }
+
+
+         
+        },
+        interns: {
+            tech: {
+                members: [
+                        {
+                            name: "Vacant",
+                            role: "Fullstack Developer (Next.js)",
+                        },
+                        {
+                            name: "Vacant",
+                            role: "Fullstack Developer (Next.js)",
+                        }
+                        ]
+              },
+
+          creative: {
+            members: [
+             
+              {
+                name: "Vacant",
+                role: "Ui/Ux Designer",
+              },
+
+              {
+                name: "Vacant",
+                role: "Brand Designer",
+
+              },
+                
+              {
+                name: "Vacant",
+                role: "3D Animator",
+
+              },
+                
+              {
+                name: "Vacant",
+                role: "Concept Artist",
+
+              },
+            ]
+          }
+        },
+        freelancers: {
+            creative: {
+            members: [
+                {
+                  name: "Muhammad Daniel",
+                  role: "Ui/Ux Designer",
+                },
+                {
+                    name: "Faris Akmal",
+                    role: "Brand Designer",
+                  }
+              ]
+            }
+        }
       },
-      keyHires: [
-        "Junior Developer",
-        "Junior Designer",
-        "Junior Marketer"
-      ]
+      keyHires: ["Product Manager", "Junior Animator"] 
+
+
+    
+      
 
     },
     financials: {
       revenue: {
-        target: "RM 20M ARR",
+        target: "RM 100K",
         breakdown: {
-          careerRPG: "RM 8M",
-          servisLah: "RM 5M",
-          arSolutions: "RM 4M",
-          academy: "RM 3M"
+          product: "RM 10K",
+          consulting: "RM 85K",
+          animation: "RM 5K"
         }
       },
-      burnRate: "RM 10K/month",
-      runway: "36 months"
+      burnRate: "RM 15K/month",
+      runway: "18 months"
     },
     ventures: {
       CareerRPG: { 
-        status: "Regional Leader", 
-        users: "200K",
-        revenue: "RM 8M ARR",
-        stage: "Series A"
+        status: "MVP", 
+        users: "1K waitlist",
+        revenue: "RM 1K"
       },
       ServisLah: { 
-        status: "Regional Expansion",
-        revenue: "RM 5M ARR",
-        stage: "Seed+"
+        status: "Beta",
+        users: "20 service centre",
+        revenue: "RM 5K"
       },
       ARespiratory: {
-        status: "Market Leader",
-        users: "10K medical professionals",
-        revenue: "RM 4M ARR"
+        status: "Launch",
+        users: "200 medical students",
+        revenue: "RM 10K"
+      } ,
+      Blanjer: {
+        status: "Launch",
+        users: "500 households",
+        revenue: "RM 10K"
       }
     },
     subsidiaries: [
       {
-        name: "NexzGen Innovation",
-        revenue: "RM 12M ARR",
+        name: "R&D Division",
+        revenue: "RM 40K",
         stage: "Growth",
         ventures: [
           {
@@ -322,7 +459,7 @@ const roadmapData = {
         ]
       },
       {
-        name: "NexzGen Education",
+        name: "Animation Division",
         revenue: "RM 7M ARR",
         stage: "Growth",
         units: [
@@ -335,25 +472,39 @@ const roadmapData = {
             revenue: "RM 3M ARR"
           }
         ]
+      },
+        {
+        name: "Digital Marketing Division",
+        revenue: "RM 5K",
+        stage: "Growth",
+        units: [
+          {
+            name: "Social Media Management",
+            revenue: "RM 2K"
+          },
+          {
+            name: "Content Creation",
+            revenue: "RM 3M ARR"
+          }
+        ]
       }
     ],
     equity: {
-      founders: "60%",
-      investors: "30%",
-      esop: "10%",
-      details: "Post Series A"
+      founders: "90%",
+      investors: "10%",
+      esop: "0%",
+      details: "Post Pre seed"
     },
     milestones: [
-      "Southeast Asia Expansion",
-      "AI Integration Across Products",
-      "Strategic Partnerships",
-      "R&D Center Launch"
+      "Pre seed Round completion",
+      "Regional Expansion Initiation",
+      "First Animation IP production"
     ],
     risks: [
-      "Regional Market Adaptation",
+      "Scaling Operations",
       "Talent Retention",
-      "Technology Evolution",
-      "Competitive Pressure"
+      "Cash Flow Management",
+      "Product Development Timeline"
     ]
   },
   '2026': {
