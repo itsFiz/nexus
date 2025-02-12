@@ -123,7 +123,11 @@ const EvolutionRoadmap = () => {
   if (status === "loading") {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-lg">Loading...</div>
+        <div className="relative w-24 h-24">
+          <div className="absolute inset-0 rounded-full border-t-4 border-violet-500 animate-spin"></div>
+          <div className="absolute inset-2 rounded-full border-r-4 border-blue-500 animate-spin-reverse"></div>
+          <div className="absolute inset-4 rounded-full border-b-4 border-emerald-500 animate-spin"></div>
+        </div>
       </div>
     );
   }
