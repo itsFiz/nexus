@@ -3,7 +3,7 @@
 // import { prisma } from '@/lib/db';
 // import { JWT } from 'next-auth/jwt';
 // import { Session } from 'next-auth';
-import { DefaultSession } from "next-auth";
+import { DefaultSession, DefaultUser } from "next-auth";
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -14,6 +14,11 @@ declare module "next-auth" {
       id: string;
       role: string;
     } & DefaultSession["user"]
+  }
+  
+  interface User extends DefaultUser {
+    role: string;
+    id: string;
   }
 }
 
@@ -39,6 +44,22 @@ export const authOptions: NextAuthOptions = {
       }
     })
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.role = user.role;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id as string;
+        session.user.role = token.role as string;
+      }
+      return session;
+    },
+  },
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30 days
@@ -56,7 +77,8 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: '/auth/signin',
-  }
+  },
+  secret: process.env.NEXTAUTH_SECRET,
 }
 
 export function validateApiKey(apiKey: string | undefined): boolean {
