@@ -111,7 +111,7 @@ type TeamBreakdown = { [category: string]: TeamStructure };
 // };
 
 const EvolutionRoadmap = () => {
-  const { data: session, status } = useSession({
+  const { status } = useSession({
     required: true,
     onUnauthenticated() {
       redirect('/auth/signin')
