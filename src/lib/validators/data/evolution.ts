@@ -19,7 +19,7 @@ const roadmapData = {
               },
               {
                 name: "Tengku Amirul Haiqal",
-                role: "CIO - Chief Innovation Officer",
+                role: "CIO - Chief Innovation(Insomnia) Officer",
                 image: "/images/cofounders/cio.png"
 
               }
@@ -158,10 +158,12 @@ const roadmapData = {
           consulting: "RM 15K",
           products: "RM 5K"
         }
-
       },
       burnRate: "RM 2K/month",
-      runway: "12 months"
+      runway: "12 months",
+      valuation: "RM 100K",
+      funding: "Bootstrapped",
+      status: "Bootstrapped"
     },
     ventures: {
       Nexus: { logo: "/images/nexzgen.png", status: "Live", focus: "Core Features" },
@@ -270,7 +272,7 @@ const roadmapData = {
               },
               {
                 name: "Tengku Amirul Haiqal",
-                role: "CIO - Chief Innovation Officer",
+                role: "CIO - Chief Innovation(Insomnia) Officer",
                 image: "/images/cofounders/cio.png"
 
               }
@@ -416,7 +418,10 @@ const roadmapData = {
         }
       },
       burnRate: "RM 15K/month",
-      runway: "18 months"
+      runway: "18 months",
+      valuation: "RM 2M",
+      funding: "Pre seed RM 200K",
+      status: "Pre seed"
     },
     ventures: {
       CareerRPG: { 
@@ -508,190 +513,631 @@ const roadmapData = {
     ]
   },
   '2026': {
-    structure: "NexzGen Group Sdn Bhd",
-    valuation: "RM 500M",
-    funding: "Series A RM 50M",
-    status: "Regional Expansion",
+    structure: "NexzGen Sdn Bhd",
+    valuation: "RM 10M",
+    funding: "YC Seed Round RM 2M",
+    status: "Regional Growth",
     team: {
-      total: 100,
-      breakdown: { 
-        tech: 45, 
-        creative: 25, 
-        business: 20,
-        operations: 10
+      total: 25,
+      breakdown: {
+        tech: {
+          engineering: {
+            members: [
+              { name: "Vacant", role: "Backend Lead" },
+              { name: "Vacant", role: "Frontend Lead" },
+              { name: "Vacant", role: "Full Stack Developer" },
+              { name: "Vacant", role: "Full Stack Developer" }
+            ]
+          }
+        },
+        creative: {
+          design: {
+            members: [
+              { name: "Vacant", role: "Design Lead" },
+              { name: "Vacant", role: "Product Designer" },
+              { name: "Vacant", role: "Visual Designer" }
+            ]
+          }
+        },
+        business: {
+          product: {
+            members: [
+              { name: "Vacant", role: "Product Lead" },
+              { name: "Vacant", role: "Market Research" }
+            ]
+          }
+        },
+        leadership: {
+          executive: {
+            members: [
+              {
+                name: "Hafiz Kadir",
+                role: "CEO",
+                image: "/images/cofounders/ceo.png"
+              },
+              {
+                name: "Putera Shazmin",
+                role: "COO",
+                image: "/images/cofounders/coo.png"
+              }
+            ]
+          }
+        }
       },
-      keyHires: [
-        "CFO",
-        "Regional Directors",
-        "Head of AI",
-        "Chief Innovation Officer"
-      ]
+      keyHires: ["CTO", "Lead Developer", "Product Manager", "Growth Manager"]
     },
     financials: {
       revenue: {
-        target: "RM 20M ARR",
+        target: "RM 500K",
         breakdown: {
-          careerRPG: "RM 8M",
-          servisLah: "RM 5M",
-          arSolutions: "RM 4M",
-          academy: "RM 3M"
+          product: "RM 200K",
+          consulting: "RM 250K",
+          animation: "RM 50K"
         }
       },
-      burnRate: "RM 800K/month",
-      runway: "36 months"
+      burnRate: "RM 50K/month",
+      runway: "24 months",
+      valuation: "RM 10M",
+      funding: "Seed Round RM 2M",
+      status: "Regional Growth"
     },
     ventures: {
       CareerRPG: { 
-        status: "Regional Leader", 
-        users: "200K",
-        revenue: "RM 8M ARR",
-        stage: "Series A"
+        status: "Product-Market Fit", 
+        users: "10K",
+        revenue: "RM 800K ARR",
+        stage: "Seed"
       },
       ServisLah: { 
-        status: "Regional Expansion",
-        revenue: "RM 5M ARR",
-        stage: "Seed+"
+        status: "Early Traction",
+        users: "1K businesses",
+        revenue: "RM 600K ARR",
+        stage: "Beta"
       },
       ARespiratory: {
-        status: "Market Leader",
-        users: "10K medical professionals",
-        revenue: "RM 4M ARR"
+        status: "Market Validation",
+        users: "500 medical professionals",
+        revenue: "RM 400K ARR"
       }
     },
     subsidiaries: [
       {
         name: "NexzGen Innovation",
-        revenue: "RM 12M ARR",
+        revenue: "RM 1.4M ARR",
         stage: "Growth",
         ventures: [
           {
             name: "CareerRPG",
-            revenue: "RM 8M ARR",
-            valuation: "RM 200M"
+            revenue: "RM 800K ARR",
+            valuation: "RM 6M"
           },
           {
             name: "ServisLah",
-            revenue: "RM 5M ARR",
-            valuation: "RM 100M"
+            revenue: "RM 600K ARR",
+            valuation: "RM 4M"
           }
         ]
       },
       {
         name: "NexzGen Education",
-        revenue: "RM 7M ARR",
-        stage: "Growth",
+        revenue: "RM 600K ARR",
+        stage: "Early Growth",
         units: [
           {
             name: "AR Medical Training",
-            revenue: "RM 4M ARR"
+            revenue: "RM 400K ARR"
           },
           {
             name: "Professional Education",
-            revenue: "RM 3M ARR"
+            revenue: "RM 200K ARR"
           }
         ]
       }
     ],
     equity: {
-      founders: "60%",
-      investors: "30%",
-      esop: "10%",
-      details: "Post Series A"
+      founders: "80%",
+      investors: "15%",
+      esop: "5%",
+      details: "Post-Seed"
     },
     milestones: [
-      "Southeast Asia Expansion",
-      "AI Integration Across Products",
-      "Strategic Partnerships",
-      "R&D Center Launch"
+      "YC Batch Acceptance",
+      "Regional Market Entry",
+      "Product-Market Fit Achievement",
+      "Core Team Formation"
     ],
     risks: [
-      "Regional Market Adaptation",
-      "Talent Retention",
-      "Technology Evolution",
-      "Competitive Pressure"
+      "Scaling Operations",
+      "Market Competition",
+      "Tech Development Timeline",
+      "Cash Flow Management"
+    ]
+  },
+  '2027': {
+    structure: "NexzGen Sdn Bhd",
+    valuation: "RM 20M",
+    funding: "Pre-Series A Bridge RM 3M",
+    status: "Regional Growth",
+    team: {
+      total: 35,
+      breakdown: {
+        tech: {
+          engineering: {
+            members: [
+              { name: "Vacant", role: "Chief Technology Officer" },
+              { name: "Vacant", role: "Backend Architecture" },
+              { name: "Vacant", role: "Frontend Lead" },
+              { name: "Vacant", role: "Full Stack Developer 1" },
+              { name: "Vacant", role: "Full Stack Developer 2" },
+              { name: "Vacant", role: "Full Stack Developer 3" },
+              { name: "Vacant", role: "Full Stack Developer 4" },
+              { name: "Vacant", role: "Full Stack Developer 5" }
+            ]
+          }
+        },
+        creative: {
+          design: {
+            members: [
+              { name: "Vacant", role: "Design Lead" },
+              { name: "Vacant", role: "Product Design" },
+              { name: "Vacant", role: "UI/UX Designer 1" },
+              { name: "Vacant", role: "UI/UX Designer 2" },
+              { name: "Vacant", role: "UI/UX Designer 3" }
+            ]
+          }
+        },
+        business: {
+          product: {
+            members: [
+              { name: "Vacant", role: "Product Strategy" },
+              { name: "Vacant", role: "Operations" },
+              { name: "Vacant", role: "Market Research 1" },
+              { name: "Vacant", role: "Market Research 2" }
+            ]
+          }
+        },
+        leadership: {
+          executive: {
+            members: [
+              {
+                name: "Hafiz Kadir",
+                role: "CEO",
+                image: "/images/cofounders/ceo.png"
+              },
+              {
+                name: "Putera Shazmin",
+                role: "COO",
+                image: "/images/cofounders/coo.png"
+              }
+            ]
+          }
+        }
+      },
+      keyHires: [
+        "Head of Engineering",
+        "Product Lead",
+        "Business Development Lead",
+        "Marketing Manager"
+      ]
+    },
+    financials: {
+      revenue: {
+        target: "RM 2M",
+        breakdown: {
+          product: "RM 1M",
+          consulting: "RM 750K",
+          animation: "RM 250K"
+        }
+      },
+      burnRate: "RM 150K/month",
+      runway: "24 months",
+      valuation: "RM 25M",
+      funding: "Series A RM 5M",
+      status: "Regional Expansion"
+    },
+    ventures: {
+      CareerRPG: { 
+        status: "Market Growth", 
+        users: "25K",
+        revenue: "RM 2M ARR",
+        stage: "Growth"
+      },
+      ServisLah: { 
+        status: "Early Growth",
+        users: "2K businesses",
+        revenue: "RM 1.2M ARR",
+        stage: "Traction"
+      },
+      ARespiratory: {
+        status: "Market Validation",
+        users: "1K medical professionals",
+        revenue: "RM 500K ARR"
+      }
+    },
+    subsidiaries: [
+      {
+        name: "NexzGen Innovation",
+        revenue: "RM 3.2M ARR",
+        stage: "Growth",
+        ventures: [
+          {
+            name: "CareerRPG",
+            revenue: "RM 2M ARR",
+            valuation: "RM 12M"
+          },
+          {
+            name: "ServisLah",
+            revenue: "RM 1.2M ARR",
+            valuation: "RM 8M"
+          }
+        ]
+      },
+      {
+        name: "NexzGen Education",
+        revenue: "RM 800K ARR",
+        stage: "Early Growth",
+        units: [
+          {
+            name: "AR Medical Training",
+            revenue: "RM 500K ARR"
+          },
+          {
+            name: "Professional Education",
+            revenue: "RM 300K ARR"
+          }
+        ]
+      }
+    ],
+    equity: {
+      founders: "75%",
+      investors: "20%",
+      esop: "5%",
+      details: "Pre-Series A"
+    },
+    milestones: [
+      "Bridge Round Completion",
+      "25K Active Users",
+      "Regional Market Entry",
+      "Core Product Validation"
+    ],
+    risks: [
+      "Market Expansion",
+      "Team Growth",
+      "Product Development",
+      "Cash Flow Management"
     ]
   },
   '2028': {
-    structure: "NexzGen Group Sdn Bhd",
-    valuation: "RM 500M",
-    funding: "Series A RM 50M",
-    status: "Regional Expansion",
+    structure: "NexzGen Sdn Bhd",
+    valuation: "RM 50M",
+    funding: "Series A RM 10M",
+    status: "ASEAN Expansion",
     team: {
-      total: 100,
-      breakdown: { 
-        tech: 45, 
-        creative: 25, 
-        business: 20,
-        operations: 10
+      total: 50,
+      breakdown: {
+        tech: {
+          engineering: {
+            members: [
+              { name: "Vacant", role: "Chief Technology Officer" },
+              { name: "Vacant", role: "VP Engineering" },
+              { name: "Vacant", role: "Team Lead 1" },
+              { name: "Vacant", role: "Team Lead 2" },
+              { name: "Vacant", role: "Team Lead 3" },
+              { name: "Vacant", role: "Senior Engineer 1" },
+              { name: "Vacant", role: "Senior Engineer 2" },
+              { name: "Vacant", role: "Senior Engineer 3" },
+              { name: "Vacant", role: "Senior Engineer 4" },
+              { name: "Vacant", role: "Senior Engineer 5" },
+              { name: "Vacant", role: "Software Engineer 1" },
+              { name: "Vacant", role: "Software Engineer 2" },
+              { name: "Vacant", role: "Software Engineer 3" },
+              { name: "Vacant", role: "Software Engineer 4" },
+              { name: "Vacant", role: "Software Engineer 5" },
+              { name: "Vacant", role: "Software Engineer 6" },
+              { name: "Vacant", role: "Software Engineer 7" },
+              { name: "Vacant", role: "Software Engineer 8" }
+            ]
+          }
+        },
+        creative: {
+          design: {
+            members: [
+              { name: "Vacant", role: "Design Lead" },
+              { name: "Vacant", role: "Design Team Lead 1" },
+              { name: "Vacant", role: "Design Team Lead 2" },
+              { name: "Vacant", role: "Senior Designer 1" },
+              { name: "Vacant", role: "Senior Designer 2" },
+              { name: "Vacant", role: "Senior Designer 3" },
+              { name: "Vacant", role: "Product Designer 1" },
+              { name: "Vacant", role: "Product Designer 2" },
+              { name: "Vacant", role: "Product Designer 3" },
+              { name: "Vacant", role: "Product Designer 4" }
+            ]
+          }
+        },
+        business: {
+          product: {
+            members: [
+              { name: "Vacant", role: "Product Strategy" },
+              { name: "Vacant", role: "Business Operations 1" },
+              { name: "Vacant", role: "Business Operations 2" },
+              { name: "Vacant", role: "Product Manager 1" },
+              { name: "Vacant", role: "Product Manager 2" },
+              { name: "Vacant", role: "Product Manager 3" },
+              { name: "Vacant", role: "Business Analyst 1" },
+              { name: "Vacant", role: "Business Analyst 2" },
+              { name: "Vacant", role: "Business Analyst 3" }
+            ]
+          }
+        },
+        leadership: {
+          executive: {
+            members: [
+              {
+                name: "Hafiz Kadir",
+                role: "CEO",
+                image: "/images/cofounders/ceo.png"
+              },
+              {
+                name: "Putera Shazmin",
+                role: "COO",
+                image: "/images/cofounders/coo.png"
+              }
+            ]
+          }
+        }
       },
       keyHires: [
-        "CFO",
-        "Regional Directors",
-        "Head of AI",
-        "Chief Innovation Officer"
+        "VP Engineering",
+        "Head of Growth",
+        "Senior Product Manager",
+        "Regional Sales Director"
       ]
     },
     financials: {
       revenue: {
-        target: "RM 20M ARR",
+        target: "RM 5M",
         breakdown: {
-          careerRPG: "RM 8M",
-          servisLah: "RM 5M",
-          arSolutions: "RM 4M",
-          academy: "RM 3M"
+          product: "RM 3M",
+          consulting: "RM 1.5M",
+          animation: "RM 500K"
         }
       },
-      burnRate: "RM 800K/month",
-      runway: "36 months"
+      burnRate: "RM 300K/month",
+      runway: "24 months",
+      valuation: "RM 50M",
+      funding: "Series A+ RM 10M",
+      status: "ASEAN Expansion"
     },
     ventures: {
       CareerRPG: { 
-        status: "Regional Leader", 
-        users: "200K",
-        revenue: "RM 8M ARR",
+        status: "Regional Growth", 
+        users: "50K",
+        revenue: "RM 4M ARR",
         stage: "Series A"
       },
       ServisLah: { 
-        status: "Regional Expansion",
-        revenue: "RM 5M ARR",
-        stage: "Seed+"
+        status: "Market Expansion",
+        users: "5K businesses",
+        revenue: "RM 2M ARR",
+        stage: "Growth"
       },
       ARespiratory: {
-        status: "Market Leader",
-        users: "10K medical professionals",
-        revenue: "RM 4M ARR"
+        status: "Regional Leader",
+        users: "2K medical professionals",
+        revenue: "RM 1.5M ARR"
       }
     },
     subsidiaries: [
       {
         name: "NexzGen Innovation",
-        revenue: "RM 12M ARR",
+        revenue: "RM 6M ARR",
         stage: "Growth",
         ventures: [
           {
             name: "CareerRPG",
-            revenue: "RM 8M ARR",
-            valuation: "RM 200M"
+            revenue: "RM 4M ARR",
+            valuation: "RM 30M"
           },
           {
             name: "ServisLah",
-            revenue: "RM 5M ARR",
-            valuation: "RM 100M"
+            revenue: "RM 2M ARR",
+            valuation: "RM 15M"
           }
         ]
       },
       {
         name: "NexzGen Education",
-        revenue: "RM 7M ARR",
+        revenue: "RM 2M ARR",
+        stage: "Regional",
+        units: [
+          {
+            name: "AR Medical Training",
+            revenue: "RM 1.5M ARR"
+          },
+          {
+            name: "Professional Education",
+            revenue: "RM 500K ARR"
+          }
+        ]
+      }
+    ],
+    equity: {
+      founders: "65%",
+      investors: "25%",
+      esop: "10%",
+      details: "Post-Series A"
+    },
+    milestones: [
+      "Series A Completion",
+      "ASEAN Market Entry",
+      "50K Active Users",
+      "Enterprise Client Acquisition"
+    ],
+    risks: [
+      "Regional Expansion",
+      "Team Scaling",
+      "Product Development",
+      "Market Competition"
+    ]
+  },
+  '2029': {
+    structure: "NexzGen Group Sdn Bhd",
+    valuation: "RM 100M",
+    funding: "Series B RM 20M",
+    status: "APAC Expansion",
+    team: {
+      total: 80,
+      breakdown: {
+        tech: {
+          engineering: {
+            members: [
+              { name: "Vacant", role: "Chief Technology Officer" },
+              { name: "Vacant", role: "VP Engineering" },
+              { name: "Vacant", role: "Team Lead 1" },
+              { name: "Vacant", role: "Team Lead 2" },
+              { name: "Vacant", role: "Team Lead 3" },
+              { name: "Vacant", role: "Team Lead 4" },
+              { name: "Vacant", role: "Team Lead 5" },
+              ...Array(8).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Senior Engineer ${i + 1}`
+              })),
+              ...Array(15).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Software Engineer ${i + 1}`
+              }))
+            ]
+          }
+        },
+        creative: {
+          design: {
+            members: [
+              { name: "Vacant", role: "Chief Creative Officer" },
+              { name: "Vacant", role: "Design Director 1" },
+              { name: "Vacant", role: "Design Director 2" },
+              { name: "Vacant", role: "Design Team Lead 1" },
+              { name: "Vacant", role: "Design Team Lead 2" },
+              { name: "Vacant", role: "Design Team Lead 3" },
+              ...Array(5).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Senior Designer ${i + 1}`
+              })),
+              ...Array(8).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Product Designer ${i + 1}`
+              }))
+            ]
+          }
+        },
+        business: {
+          product: {
+            members: [
+              { name: "Vacant", role: "Chief Product Officer" },
+              { name: "Vacant", role: "Business Director 1" },
+              { name: "Vacant", role: "Business Director 2" },
+              { name: "Vacant", role: "Product Team Lead 1" },
+              { name: "Vacant", role: "Product Team Lead 2" },
+              { name: "Vacant", role: "Product Team Lead 3" },
+              ...Array(5).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Product Manager ${i + 1}`
+              })),
+              ...Array(5).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Business Analyst ${i + 1}`
+              }))
+            ]
+          }
+        },
+        leadership: {
+          executive: {
+            members: [
+              {
+                name: "Hafiz Kadir",
+                role: "CEO",
+                image: "/images/cofounders/ceo.png"
+              },
+              {
+                name: "Putera Shazmin",
+                role: "COO",
+                image: "/images/cofounders/coo.png"
+              }
+            ]
+          }
+        }
+      },
+      keyHires: [
+        "Head of ASEAN",
+        "VP Engineering",
+        "Head of Growth",
+        "Head of People"
+      ]
+    },
+    financials: {
+      revenue: {
+        target: "RM 10M",
+        breakdown: {
+          product: "RM 6M",
+          consulting: "RM 3M",
+          animation: "RM 1M"
+        }
+      },
+      burnRate: "RM 500K/month",
+      runway: "30 months",
+      valuation: "RM 100M",
+      funding: "Series B RM 20M",
+      status: "APAC Expansion"
+    },
+    ventures: {
+      CareerRPG: { 
+        status: "ASEAN Growth", 
+        users: "100K",
+        revenue: "RM 10M ARR",
+        stage: "Post Series A"
+      },
+      ServisLah: { 
+        status: "Regional Growth",
+        users: "15K businesses",
+        revenue: "RM 6M ARR",
+        stage: "Series A"
+      },
+      ARespiratory: {
+        status: "ASEAN Expansion",
+        users: "5K medical professionals",
+        revenue: "RM 2.5M ARR"
+      }
+    },
+    subsidiaries: [
+      {
+        name: "NexzGen Innovation",
+        revenue: "RM 16M ARR",
+        stage: "Regional Growth",
+        ventures: [
+          {
+            name: "CareerRPG",
+            revenue: "RM 10M ARR",
+            valuation: "RM 100M"
+          },
+          {
+            name: "ServisLah",
+            revenue: "RM 6M ARR",
+            valuation: "RM 60M"
+          }
+        ]
+      },
+      {
+        name: "NexzGen Education",
+        revenue: "RM 4M ARR",
         stage: "Growth",
         units: [
           {
             name: "AR Medical Training",
-            revenue: "RM 4M ARR"
+            revenue: "RM 2.5M ARR"
           },
           {
             name: "Professional Education",
-            revenue: "RM 3M ARR"
+            revenue: "RM 1.5M ARR"
           }
         ]
       }
@@ -700,102 +1146,409 @@ const roadmapData = {
       founders: "60%",
       investors: "30%",
       esop: "10%",
-      details: "Post Series A"
+      details: "Post Series A Growth"
     },
     milestones: [
-      "Southeast Asia Expansion",
-      "AI Integration Across Products",
-      "Strategic Partnerships",
-      "R&D Center Launch"
+      "ASEAN Expansion",
+      "100K Active Users",
+      "Enterprise Platform Launch",
+      "Regional Team Formation"
     ],
     risks: [
-      "Regional Market Adaptation",
-      "Talent Retention",
-      "Technology Evolution",
-      "Competitive Pressure"
+      "Regional Competition",
+      "Operational Scale",
+      "Market Penetration",
+      "Talent Acquisition"
     ]
   },
   '2030': {
-    structure: "NexzGen Group (Pre-IPO)",
-    valuation: "RM 2B",
-    funding: "Series B RM 200M",
-    status: "Market Leader",
+    structure: "NexzGen Group Sdn Bhd",
+    valuation: "RM 300M",
+    funding: "Series B RM 40M",
+    status: "APAC Expansion",
     team: {
-      total: 300,
-      breakdown: { 
-        tech: 150, 
-        creative: 70, 
-        business: 50,
-        operations: 30
+      total: 150,
+      breakdown: {
+        tech: {
+          engineering: {
+            members: [
+              { name: "Vacant", role: "Chief Technology Officer" },
+              { name: "Vacant", role: "VP Engineering" },
+              ...Array(3).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Regional Tech Director ${i + 1}`
+              })),
+              ...Array(8).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Team Lead ${i + 1}`
+              })),
+              ...Array(15).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Senior Engineer ${i + 1}`
+              })),
+              ...Array(25).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Software Engineer ${i + 1}`
+              }))
+            ]
+          }
+        },
+        creative: {
+          design: {
+            members: [
+              { name: "Vacant", role: "Chief Creative Officer" },
+              ...Array(3).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Regional Design Director ${i + 1}`
+              })),
+              ...Array(5).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Design Team Lead ${i + 1}`
+              })),
+              ...Array(8).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Senior Designer ${i + 1}`
+              })),
+              ...Array(15).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Product Designer ${i + 1}`
+              }))
+            ]
+          }
+        },
+        business: {
+          product: {
+            members: [
+              { name: "Vacant", role: "Chief Product Officer" },
+              ...Array(3).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Regional Director ${i + 1}`
+              })),
+              ...Array(5).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Product Team Lead ${i + 1}`
+              })),
+              ...Array(8).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Product Manager ${i + 1}`
+              })),
+              ...Array(8).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Business Analyst ${i + 1}`
+              }))
+            ]
+          }
+        },
+        leadership: {
+          executive: {
+            members: [
+              {
+                name: "Hafiz Kadir",
+                role: "CEO",
+                image: "/images/cofounders/ceo.png"
+              },
+              {
+                name: "Putera Shazmin",
+                role: "COO",
+                image: "/images/cofounders/coo.png"
+              }
+            ]
+          }
+        }
       },
       keyHires: [
-        "COO",
-        "International VPs",
-        "Research Directors",
-        "Global Partnership Lead"
+        "Chief Product Officer",
+        "Head of APAC",
+        "VP Sales",
+        "Head of Data"
       ]
     },
     financials: {
       revenue: {
-        target: "RM 100M ARR",
+        target: "RM 25M",
         breakdown: {
-          careerPlatform: "RM 40M",
-          enterpriseSolutions: "RM 25M",
-          educationTech: "RM 20M",
-          innovationServices: "RM 15M"
+          product: "RM 15M",
+          consulting: "RM 7M",
+          animation: "RM 3M"
         }
       },
-      burnRate: "RM 3M/month",
-      runway: "48 months"
+      burnRate: "RM 1.8M/month",
+      runway: "36 months"
     },
     ventures: {
       CareerRPG: { 
-        status: "Category Leader", 
-        users: "1M",
-        revenue: "RM 40M ARR",
+        status: "ASEAN Leader", 
+        users: "300K",
+        revenue: "RM 20M ARR",
         stage: "Series B"
       },
       ServisLah: { 
         status: "Regional Leader",
-        revenue: "RM 25M ARR",
+        users: "30K businesses",
+        revenue: "RM 12M ARR",
         stage: "Series A"
       },
       ARespiratory: {
-        status: "Global Expansion",
-        users: "50K institutions",
-        revenue: "RM 20M ARR"
+        status: "ASEAN Standard",
+        users: "15K medical professionals",
+        revenue: "RM 5M ARR"
       }
     },
     subsidiaries: [
       {
-        name: "NexzGen Technology",
-        revenue: "RM 65M ARR",
-        stage: "Pre-IPO",
+        name: "NexzGen Global Technology",
+        revenue: "RM 240M ARR",
+        stage: "APAC Leader",
         ventures: [
           {
-            name: "CareerRPG Global",
-            revenue: "RM 40M ARR",
-            stage: "Series B"
+            name: "CareerTech Division",
+            revenue: "RM 150M ARR",
+            valuation: "RM 1.5B"
           },
           {
-            name: "ServisLah International",
-            revenue: "RM 25M ARR",
-            stage: "Series A"
+            name: "Enterprise Solutions",
+            revenue: "RM 90M ARR",
+            valuation: "RM 900M"
           }
         ]
       },
       {
-        name: "NexzGen Education",
-        revenue: "RM 35M ARR",
-        stage: "Growth",
+        name: "NexzGen Healthcare & Education",
+        revenue: "RM 40M ARR",
+        stage: "Global",
         units: [
           {
             name: "Medical Technology",
-            revenue: "RM 20M ARR"
+            revenue: "RM 25M ARR",
+            stage: "Global Standard"
           },
           {
-            name: "Professional Development",
-            revenue: "RM 15M ARR"
+            name: "Professional Education",
+            revenue: "RM 15M ARR",
+            stage: "Global Growth"
+          }
+        ]
+      },
+      {
+        name: "NexzGen Future Labs",
+        revenue: "RM 20M ARR",
+        stage: "Innovation Leader",
+        units: [
+          {
+            name: "AI & Quantum",
+            revenue: "RM 12M ARR",
+            stage: "Market Entry"
+          },
+          {
+            name: "Metaverse Solutions",
+            revenue: "RM 8M ARR",
+            stage: "Pioneer"
+          }
+        ]
+      }
+    ],
+    equity: {
+      founders: "52%",
+      investors: "38%",
+      esop: "10%",
+      details: "Post-Series B"
+    },
+    milestones: [
+      "Series B Completion",
+      "APAC Market Entry",
+      "300K Active Users",
+      "Enterprise Platform Scale"
+    ],
+    risks: [
+      "Market Competition",
+      "Tech Scaling",
+      "International Operations",
+      "Talent Retention"
+    ]
+  },
+  '2032': {
+    structure: "NexzGen Group Sdn Bhd",
+    valuation: "RM 600M",
+    funding: "Series C RM 100M",
+    status: "APAC Leader",
+    team: {
+      total: 250,
+      breakdown: {
+        tech: {
+          engineering: {
+            members: [
+              { name: "Vacant", role: "Chief Technology Officer" },
+              { name: "Vacant", role: "VP Engineering 1" },
+              { name: "Vacant", role: "VP Engineering 2" },
+              ...Array(5).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Regional Tech Director ${i + 1}`
+              })),
+              ...Array(12).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Team Lead ${i + 1}`
+              })),
+              ...Array(25).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Senior Engineer ${i + 1}`
+              })),
+              ...Array(40).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Software Engineer ${i + 1}`
+              }))
+            ]
+          }
+        },
+        creative: {
+          members: [
+            { name: "Vacant", role: "Chief Creative Officer" },
+            { name: "Vacant", role: "VP Design" },
+            ...Array(5).fill(null).map((_, i) => ({
+              name: "Vacant",
+              role: `Regional Design Director ${i + 1}`
+            })),
+            ...Array(8).fill(null).map((_, i) => ({
+              name: "Vacant",
+              role: `Design Team Lead ${i + 1}`
+            })),
+            ...Array(15).fill(null).map((_, i) => ({
+              name: "Vacant",
+              role: `Senior Designer ${i + 1}`
+            })),
+            ...Array(25).fill(null).map((_, i) => ({
+              name: "Vacant",
+              role: `Product Designer ${i + 1}`
+            }))
+          ]
+        },
+        business: {
+          members: [
+            { name: "Vacant", role: "Chief Product Officer" },
+            { name: "Vacant", role: "VP Business 1" },
+            { name: "Vacant", role: "VP Business 2" },
+            ...Array(5).fill(null).map((_, i) => ({
+              name: "Vacant",
+              role: `Regional Director ${i + 1}`
+            })),
+            ...Array(8).fill(null).map((_, i) => ({
+              name: "Vacant",
+              role: `Product Team Lead ${i + 1}`
+            })),
+            ...Array(15).fill(null).map((_, i) => ({
+              name: "Vacant",
+              role: `Product Manager ${i + 1}`
+            })),
+            ...Array(12).fill(null).map((_, i) => ({
+              name: "Vacant",
+              role: `Business Analyst ${i + 1}`
+            }))
+          ]
+        },
+        leadership: {
+          executive: {
+            members: [
+              {
+                name: "Hafiz Kadir",
+                role: "CEO",
+                image: "/images/cofounders/ceo.png"
+              },
+              {
+                name: "Putera Shazmin",
+                role: "COO",
+                image: "/images/cofounders/coo.png"
+              }
+            ]
+          }
+        }
+      },
+      keyHires: [
+        "Group CFO",
+        "Chief Innovation Officer",
+        "Head of Global Markets",
+        "VP Corporate Strategy"
+      ]
+    },
+    financials: {
+      revenue: {
+        target: "RM 100M",
+        breakdown: {
+          product: "RM 60M",
+          consulting: "RM 25M",
+          animation: "RM 15M"
+        }
+      },
+      burnRate: "RM 4M/month",
+      runway: "30 months"
+    },
+    ventures: {
+      CareerRPG: { 
+        status: "APAC Leader", 
+        users: "800K",
+        revenue: "RM 50M ARR",
+        stage: "Series C"
+      },
+      ServisLah: { 
+        status: "APAC Growth",
+        users: "60K businesses",
+        revenue: "RM 30M ARR",
+        stage: "Series B"
+      },
+      ARespiratory: {
+        status: "Global Expansion",
+        users: "30K medical professionals",
+        revenue: "RM 15M ARR",
+        stage: "Series A"
+      }
+    },
+    subsidiaries: [
+      {
+        name: "NexzGen Global Technology",
+        revenue: "RM 240M ARR",
+        stage: "APAC Leader",
+        ventures: [
+          {
+            name: "CareerTech Division",
+            revenue: "RM 150M ARR",
+            valuation: "RM 1.5B"
+          },
+          {
+            name: "Enterprise Solutions",
+            revenue: "RM 90M ARR",
+            valuation: "RM 900M"
+          }
+        ]
+      },
+      {
+        name: "NexzGen Healthcare & Education",
+        revenue: "RM 40M ARR",
+        stage: "Global",
+        units: [
+          {
+            name: "Medical Technology",
+            revenue: "RM 25M ARR",
+            stage: "Global Standard"
+          },
+          {
+            name: "Professional Education",
+            revenue: "RM 15M ARR",
+            stage: "Global Growth"
+          }
+        ]
+      },
+      {
+        name: "NexzGen Future Labs",
+        revenue: "RM 20M ARR",
+        stage: "Innovation Leader",
+        units: [
+          {
+            name: "AI & Quantum",
+            revenue: "RM 12M ARR",
+            stage: "Market Entry"
+          },
+          {
+            name: "Metaverse Solutions",
+            revenue: "RM 8M ARR",
+            stage: "Pioneer"
           }
         ]
       }
@@ -804,139 +1557,672 @@ const roadmapData = {
       founders: "45%",
       investors: "45%",
       esop: "10%",
-      details: "Pre-IPO Structure"
+      details: "Post-Series C"
     },
     milestones: [
-      "Global Market Entry",
-      "IPO Preparation",
-      "Innovation Hub Launch",
-      "Strategic Acquisitions"
+      "Series C Completion",
+      "APAC Market Leadership",
+      "800K Active Users",
+      "AI Platform Launch",
+      "R&D Division Launch"
     ],
     risks: [
-      "Global Economic Conditions",
-      "Regulatory Changes",
-      "Technology Disruption",
-      "Market Consolidation"
+      "Global Market Entry",
+      "Tech Infrastructure",
+      "Regulatory Compliance",
+      "Competition",
+      "Innovation Pace"
     ]
   },
-  '2040': {
-    structure: "NexzGen Bhd (KLSE:NXGN)",
-    valuation: "RM 10B",
-    funding: "Public Market",
-    status: "Global Technology Leader",
+
+  '2035': {
+    structure: "NexzGen Group Sdn Bhd",
+    valuation: "RM 1.2B",
+    funding: "Series D RM 150M",
+    status: "Global Expansion",
     team: {
-      total: 1000,
-      breakdown: { 
-        tech: 500, 
-        creative: 200, 
-        business: 200,
-        operations: 100
+      total: 400,
+      breakdown: {
+        tech: {
+          engineering: {
+            members: [
+              { name: "Vacant", role: "Chief Technology Officer" },
+              ...Array(3).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `VP Engineering ${i + 1}`
+              })),
+              ...Array(8).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Regional Tech Director ${i + 1}`
+              })),
+              ...Array(15).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Team Lead ${i + 1}`
+              })),
+              ...Array(40).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Senior Engineer ${i + 1}`
+              })),
+              ...Array(60).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Software Engineer ${i + 1}`
+              }))
+            ]
+          }
+        },
+        creative: {
+          design: {
+            members: [
+              { name: "Vacant", role: "Chief Creative Officer" },
+              { name: "Vacant", role: "VP Design 1" },
+              { name: "Vacant", role: "VP Design 2" },
+              ...Array(8).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Regional Design Director ${i + 1}`
+              })),
+              ...Array(12).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Design Team Lead ${i + 1}`
+              })),
+              ...Array(25).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Senior Designer ${i + 1}`
+              })),
+              ...Array(40).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Product Designer ${i + 1}`
+              }))
+            ]
+          }
+        },
+        business: {
+          product: {
+            members: [
+              { name: "Vacant", role: "Chief Product Officer" },
+              ...Array(3).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `VP Business ${i + 1}`
+              })),
+              ...Array(8).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Regional Director ${i + 1}`
+              })),
+              ...Array(12).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Product Team Lead ${i + 1}`
+              })),
+              ...Array(25).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Product Manager ${i + 1}`
+              })),
+              ...Array(20).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Business Analyst ${i + 1}`
+              }))
+            ]
+          }
+        },
+        leadership: {
+          executive: {
+            members: [
+              {
+                name: "Hafiz Kadir",
+                role: "CEO",
+                image: "/images/cofounders/ceo.png"
+              },
+              {
+                name: "Putera Shazmin",
+                role: "COO",
+                image: "/images/cofounders/coo.png"
+              }
+            ]
+          }
+        }
       },
       keyHires: [
-        "Global Innovation Directors",
-        "Sustainability Officers",
-        "Research Leaders",
-        "Regional CEOs"
+        "Chief Research Officer",
+        "Global Division Heads",
+        "Head of Sustainability",
+        "Global Talent Director"
       ]
     },
     financials: {
       revenue: {
-        target: "RM 1B ARR",
+        target: "RM 200M ARR",
         breakdown: {
-          careerTech: "RM 400M",
-          enterpriseSolutions: "RM 250M",
-          educationTechnology: "RM 200M",
-          innovationServices: "RM 150M"
+          product: "RM 150M",
+          consulting: "RM 75M",
+          animation: "RM 25M"
         }
       },
-      burnRate: "RM 15M/month",
-      runway: "Sustainable Operations"
+      burnRate: "RM 8M/month",
+      runway: "24 months"
     },
     ventures: {
       CareerRPG: { 
-        status: "Global Platform", 
-        users: "10M",
-        revenue: "RM 400M ARR"
+        status: "Global Growth", 
+        users: "1.5M",
+        revenue: "RM 100M ARR",
+        stage: "Series D"
       },
       ServisLah: { 
-        status: "Market Leader",
-        revenue: "RM 250M ARR"
+        status: "APAC Leader",
+        users: "100K businesses",
+        revenue: "RM 60M ARR",
+        stage: "Series C"
       },
       ARespiratory: {
-        status: "Industry Standard",
-        users: "500K institutions",
-        revenue: "RM 200M ARR"
+        status: "Global Standard",
+        users: "50K medical institutions",
+        revenue: "RM 30M ARR",
+        stage: "Series B"
       }
     },
     subsidiaries: [
       {
         name: "NexzGen Global Technology",
-        revenue: "RM 650M ARR",
-        stage: "Market Leader",
+        revenue: "RM 240M ARR",
+        stage: "APAC Leader",
         ventures: [
           {
             name: "CareerTech Division",
-            revenue: "RM 400M ARR"
+            revenue: "RM 150M ARR",
+            valuation: "RM 1.5B"
           },
           {
             name: "Enterprise Solutions",
-            revenue: "RM 250M ARR"
+            revenue: "RM 90M ARR",
+            valuation: "RM 900M"
           }
         ]
       },
       {
-        name: "NexzGen Innovation",
-        revenue: "RM 350M ARR",
-        stage: "Growth",
+        name: "NexzGen Healthcare & Education",
+        revenue: "RM 40M ARR",
+        stage: "Global",
         units: [
           {
-            name: "Education Technology",
+            name: "Medical Technology",
+            revenue: "RM 25M ARR",
+            stage: "Global Standard"
+          },
+          {
+            name: "Professional Education",
+            revenue: "RM 15M ARR",
+            stage: "Global Growth"
+          }
+        ]
+      },
+      {
+        name: "NexzGen Future Labs",
+        revenue: "RM 20M ARR",
+        stage: "Innovation Leader",
+        units: [
+          {
+            name: "AI & Quantum",
+            revenue: "RM 12M ARR",
+            stage: "Market Entry"
+          },
+          {
+            name: "Metaverse Solutions",
+            revenue: "RM 8M ARR",
+            stage: "Pioneer"
+          }
+        ]
+      }
+    ],
+    equity: {
+      founders: "40%",
+      investors: "50%",
+      esop: "10%",
+      details: "Post-Series D"
+    },
+    milestones: [
+      "Series D Completion",
+      "Global Market Entry",
+      "1.5M Active Users",
+      "Quantum Computing Initiative",
+      "Sustainability Platform"
+    ],
+    risks: [
+      "Global Competition",
+      "Tech Evolution",
+      "Market Dynamics",
+      "Regulatory Framework",
+      "Innovation Leadership"
+    ]
+  },
+  '2037': {
+    structure: "NexzGen Global Group",
+    valuation: "RM 2.5B",
+    funding: "Series E RM 250M",
+    status: "Global Tech Company",
+    team: {
+      total: 600,
+      breakdown: {
+        tech: {
+          engineering: {
+            members: [
+              { name: "Vacant", role: "Chief Technology Officer" },
+              { name: "Vacant", role: "Chief AI Officer" },
+              { name: "Vacant", role: "Chief Quantum Officer" },
+              ...Array(10).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `VP Engineering ${i + 1}`
+              })),
+              ...Array(30).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Regional Tech Director ${i + 1}`
+              })),
+              ...Array(100).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Team Lead ${i + 1}`
+              })),
+              ...Array(500).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Senior Engineer ${i + 1}`
+              })),
+              ...Array(1000).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Software Engineer ${i + 1}`
+              }))
+            ]
+          }
+        },
+        creative: {
+          design: {
+            members: [
+              { name: "Vacant", role: "Chief Creative Officer" },
+              { name: "Vacant", role: "Chief Design Officer" },
+              ...Array(8).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `VP Design ${i + 1}`
+              })),
+              ...Array(30).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Regional Design Director ${i + 1}`
+              })),
+              ...Array(100).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Design Team Lead ${i + 1}`
+              })),
+              ...Array(300).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Senior Designer ${i + 1}`
+              })),
+              ...Array(500).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Product Designer ${i + 1}`
+              }))
+            ]
+          }
+        },
+        business: {
+          product: {
+            members: [
+              { name: "Vacant", role: "Chief Product Officer" },
+              { name: "Vacant", role: "Chief Strategy Officer" },
+              ...Array(10).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `VP Business ${i + 1}`
+              })),
+              ...Array(30).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Regional Director ${i + 1}`
+              })),
+              ...Array(100).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Product Team Lead ${i + 1}`
+              })),
+              ...Array(300).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Product Manager ${i + 1}`
+              })),
+              ...Array(200).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Business Analyst ${i + 1}`
+              }))
+            ]
+          }
+        },
+        leadership: {
+          executive: {
+            members: [
+              {
+                name: "Hafiz Kadir",
+                role: "Executive Chairman",
+                image: "/images/cofounders/ceo.png"
+              },
+              {
+                name: "Putera Shazmin",
+                role: "Vice Chairman",
+                image: "/images/cofounders/coo.png"
+              }
+            ]
+          }
+        }
+      },
+      keyHires: [
+        "Global Innovation President",
+        "Chief Sustainability Officer",
+        "Chief Metaverse Officer",
+        "Global Research Director"
+      ]
+    },
+    financials: {
+      revenue: {
+        target: "RM 10B",
+        breakdown: {
+          product: "RM 6B",
+          consulting: "RM 3B",
+          animation: "RM 1B"
+        }
+      },
+      burnRate: "RM 200M/month",
+      runway: "Highly Profitable",
+      valuation: "RM 50B",
+      funding: "Market Cap RM 50B",
+      status: "Fortune 100"
+    },
+    ventures: {
+      CareerRPG: { 
+        status: "Global EdTech Leader", 
+        users: "50M+",
+        revenue: "RM 2.5B ARR",
+        stage: "Industry Standard"
+      },
+      ServisLah: { 
+        status: "Global Enterprise Platform",
+        users: "1M businesses",
+        revenue: "RM 1.5B ARR",
+        stage: "Industry Leader"
+      },
+      ARespiratory: {
+        status: "Global Healthcare Standard",
+        users: "500K medical institutions",
+        revenue: "RM 700M ARR",
+        stage: "Industry Standard"
+      }
+    },
+    subsidiaries: [
+      {
+        name: "NexzGen Global Technologies",
+        revenue: "RM 4B ARR",
+        stage: "Fortune 500",
+        ventures: [
+          {
+            name: "Career & Workforce Solutions",
+            revenue: "RM 2.5B ARR",
+            valuation: "RM 25B"
+          },
+          {
+            name: "Enterprise & Cloud Services",
+            revenue: "RM 1.5B ARR",
+            valuation: "RM 15B"
+          }
+        ]
+      },
+      {
+        name: "NexzGen Healthcare & Education",
+        revenue: "RM 700M ARR",
+        stage: "Global Leader",
+        units: [
+          {
+            name: "Medical Technology Solutions",
+            revenue: "RM 500M ARR",
+            stage: "Industry Standard"
+          },
+          {
+            name: "Global Education Technologies",
             revenue: "RM 200M ARR",
-            stage: "Global Leader"
-          },
+            stage: "Market Leader"
+          }
+        ]
+      },
+      {
+        name: "NexzGen Future Technologies",
+        revenue: "RM 300M ARR",
+        stage: "Innovation Leader",
+        units: [
           {
-            name: "Research & Development",
+            name: "Quantum Computing Division",
             revenue: "RM 150M ARR",
-            stage: "Innovation Hub"
-          }
-        ]
-      },
-      {
-        name: "NexzGen Entertainment",
-        revenue: "RM 250M ARR",
-        stage: "Growth",
-        units: [
+            stage: "Global Pioneer"
+          },
           {
-            name: "Animation Studios",
+            name: "Metaverse Solutions",
             revenue: "RM 100M ARR",
-            stage: "Regional Leader"
+            stage: "Industry Standard"
           },
           {
-            name: "Game Development",
-            revenue: "RM 80M ARR",
-            stage: "Emerging Leader"
+            name: "Sustainable Tech",
+            revenue: "RM 50M ARR",
+            stage: "Global Leader"
+          }
+        ]
+      }
+    ],
+    equity: {
+      founders: "25%",
+      investors: "65%",
+      esop: "10%",
+      details: "Dual Listed Global Entity"
+    },
+    milestones: [
+      "Fortune 100 Entry",
+      "50M+ Active Users",
+      "Carbon Negative Operations",
+      "Quantum Computing Leadership",
+      "Global Tech Standard"
+    ],
+    risks: [
+      "Technological Singularity",
+      "Global Economic Shifts",
+      "Regulatory Evolution",
+      "Climate Impact",
+      "Innovation Competition"
+    ]
+  },
+  '2040': {
+    structure: "NexzGen Global Corporation Bhd (NYSE: NXGN, KLSE: NXGN)",
+    valuation: "RM 5B",
+    funding: "IPO Listed",
+    status: "Global Tech Leader",
+    team: {
+      total: 1000,
+      breakdown: {
+        tech: {
+          engineering: {
+            members: [
+              { name: "Vacant", role: "Chief Technology Officer" },
+              ...Array(5).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `VP Engineering ${i + 1}`
+              })),
+              ...Array(15).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Regional Tech Director ${i + 1}`
+              })),
+              ...Array(30).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Team Lead ${i + 1}`
+              })),
+              ...Array(100).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Senior Engineer ${i + 1}`
+              })),
+              ...Array(150).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Software Engineer ${i + 1}`
+              }))
+            ]
+          }
+        },
+        creative: {
+          design: {
+            members: [
+              { name: "Vacant", role: "Chief Creative Officer" },
+              ...Array(4).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `VP Design ${i + 1}`
+              })),
+              ...Array(15).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Regional Design Director ${i + 1}`
+              })),
+              ...Array(25).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Design Team Lead ${i + 1}`
+              })),
+              ...Array(50).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Senior Designer ${i + 1}`
+              })),
+              ...Array(100).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Product Designer ${i + 1}`
+              }))
+            ]
+          }
+        },
+        business: {
+          product: {
+            members: [
+              { name: "Vacant", role: "Chief Product Officer" },
+              ...Array(5).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `VP Business ${i + 1}`
+              })),
+              ...Array(15).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Regional Director ${i + 1}`
+              })),
+              ...Array(25).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Product Team Lead ${i + 1}`
+              })),
+              ...Array(50).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Product Manager ${i + 1}`
+              })),
+              ...Array(40).fill(null).map((_, i) => ({
+                name: "Vacant",
+                role: `Business Analyst ${i + 1}`
+              }))
+            ]
+          }
+        },
+        leadership: {
+          executive: {
+            members: [
+              {
+                name: "Hafiz Kadir",
+                role: "CEO",
+                image: "/images/cofounders/ceo.png"
+              },
+              {
+                name: "Putera Shazmin",
+                role: "COO",
+                image: "/images/cofounders/coo.png"
+              }
+            ]
+          }
+        }
+      },
+      keyHires: [
+        "Global Innovation Directors",
+        "Chief Quantum Officer",
+        "Chief Sustainability Officer",
+        "Head of Global Strategy"
+      ]
+    },
+    financials: {
+      revenue: {
+        target: "RM 1B",
+        breakdown: {
+          product: "RM 600M",
+          consulting: "RM 300M",
+          animation: "RM 100M"
+        }
+      },
+      burnRate: "RM 15M/month",
+      runway: "Profitable Operations"
+      
+    },
+    ventures: {
+      CareerRPG: { 
+        status: "Global EdTech Leader", 
+        users: "5M+",
+        revenue: "RM 250M ARR",
+        stage: "Market Leader"
+      },
+      ServisLah: { 
+        status: "Global Enterprise Platform",
+        users: "200K businesses",
+        revenue: "RM 150M ARR",
+        stage: "Market Leader"
+      },
+      ARespiratory: {
+        status: "Global Healthcare Standard",
+        users: "100K medical institutions",
+        revenue: "RM 70M ARR",
+        stage: "Industry Leader"
+      }
+    },
+    subsidiaries: [
+      {
+        name: "NexzGen Global Technologies",
+        revenue: "RM 400M ARR",
+        stage: "Global Leader",
+        ventures: [
+          {
+            name: "Career & Workforce Solutions",
+            revenue: "RM 250M ARR",
+            valuation: "RM 2.5B"
           },
           {
-            name: "Digital Media",
-            revenue: "RM 70M ARR",
-            stage: "Growth"
+            name: "Enterprise & Cloud Services",
+            revenue: "RM 150M ARR",
+            valuation: "RM 1.5B"
           }
         ]
       },
       {
-        name: "NexzGen Ventures",
-        revenue: "RM 100M ARR",
-        stage: "Strategic Investment",
+        name: "NexzGen Healthcare & Education",
+        revenue: "RM 700M ARR",
+        stage: "Global Leader",
         units: [
           {
-            name: "Startup Accelerator",
-            revenue: "RM 60M ARR",
-            stage: "Regional Hub"
+            name: "Medical Technology Solutions",
+            revenue: "RM 500M ARR",
+            stage: "Industry Standard"
           },
           {
-            name: "Corporate Innovation",
-            revenue: "RM 40M ARR",
-            stage: "Industry Leader"
+            name: "Global Education Technologies",
+            revenue: "RM 200M ARR",
+            stage: "Market Leader"
+          }
+        ]
+      },
+      {
+        name: "NexzGen Future Technologies",
+        revenue: "RM 300M ARR",
+        stage: "Innovation Pioneer",
+        units: [
+          {
+            name: "Quantum Computing Division",
+            revenue: "RM 150M ARR",
+            stage: "Global Pioneer"
+          },
+          {
+            name: "Metaverse Solutions",
+            revenue: "RM 100M ARR",
+            stage: "Industry Standard"
+          },
+          {
+            name: "Sustainable Tech",
+            revenue: "RM 50M ARR",
+            stage: "Global Leader"
           }
         ]
       }
@@ -945,23 +2231,255 @@ const roadmapData = {
       founders: "35%",
       investors: "55%",
       esop: "10%",
-      details: "Public Listed Company"
+      details: "Public Listed Entity"
     },
     milestones: [
-      "Global Innovation Leadership",
-      "Sustainable Technology Pioneer",
-      "Next-Gen Tech Development",
-      "Strategic Global Acquisitions",
-      "Entertainment Industry Leadership"
+      "Successful IPO",
+      "5M+ Active Users",
+      "Global Market Leadership",
+      "Quantum Computing Scale",
+      "Carbon Neutral Achievement"
     ],
     risks: [
-      "Emerging Technologies Disruption",
-      "Global Market Dynamics",
-      "Regulatory Evolution",
+      "Market Disruption",
+      "Tech Evolution",
+      "Global Regulations",
       "Talent Innovation",
-      "Content Monetization Challenges"
+      "Sustainability Goals"
     ]
-  }
+  },
+  '2050': {
+  structure: "NexzGen Global Corporation Bhd (NYSE: NXGN, KLSE: NXGN)",
+  valuation: "RM 50B",
+  funding: "Dual Listed NYSE & KLSE",
+  status: "Fortune 100 Tech Leader",
+  team: {
+    total: 5000,
+    breakdown: {
+      tech: {
+        engineering: {
+          members: [
+            { name: "Vacant", role: "Chief Technology Officer" },
+            { name: "Vacant", role: "Chief AI Officer" },
+            { name: "Vacant", role: "Chief Quantum Officer" },
+            ...Array(10).fill(null).map((_, i) => ({
+              name: "Vacant",
+              role: `VP Engineering ${i + 1}`
+            })),
+            ...Array(30).fill(null).map((_, i) => ({
+              name: "Vacant",
+              role: `Regional Tech Director ${i + 1}`
+            })),
+            ...Array(100).fill(null).map((_, i) => ({
+              name: "Vacant",
+              role: `Team Lead ${i + 1}`
+            })),
+            ...Array(500).fill(null).map((_, i) => ({
+              name: "Vacant",
+              role: `Senior Engineer ${i + 1}`
+            })),
+            ...Array(1000).fill(null).map((_, i) => ({
+              name: "Vacant",
+              role: `Software Engineer ${i + 1}`
+            }))
+          ]
+        }
+      },
+      creative: {
+        design: {
+          members: [
+            { name: "Vacant", role: "Chief Creative Officer" },
+            { name: "Vacant", role: "Chief Design Officer" },
+            ...Array(8).fill(null).map((_, i) => ({
+              name: "Vacant",
+              role: `VP Design ${i + 1}`
+            })),
+            ...Array(30).fill(null).map((_, i) => ({
+              name: "Vacant",
+              role: `Regional Design Director ${i + 1}`
+            })),
+            ...Array(100).fill(null).map((_, i) => ({
+              name: "Vacant",
+              role: `Design Team Lead ${i + 1}`
+            })),
+            ...Array(300).fill(null).map((_, i) => ({
+              name: "Vacant",
+              role: `Senior Designer ${i + 1}`
+            })),
+            ...Array(500).fill(null).map((_, i) => ({
+              name: "Vacant",
+              role: `Product Designer ${i + 1}`
+            }))
+          ]
+        }
+      },
+      business: {
+        product: {
+          members: [
+            { name: "Vacant", role: "Chief Product Officer" },
+            { name: "Vacant", role: "Chief Strategy Officer" },
+            ...Array(10).fill(null).map((_, i) => ({
+              name: "Vacant",
+              role: `VP Business ${i + 1}`
+            })),
+            ...Array(30).fill(null).map((_, i) => ({
+              name: "Vacant",
+              role: `Regional Director ${i + 1}`
+            })),
+            ...Array(100).fill(null).map((_, i) => ({
+              name: "Vacant",
+              role: `Product Team Lead ${i + 1}`
+            })),
+            ...Array(300).fill(null).map((_, i) => ({
+              name: "Vacant",
+              role: `Product Manager ${i + 1}`
+            })),
+            ...Array(200).fill(null).map((_, i) => ({
+              name: "Vacant",
+              role: `Business Analyst ${i + 1}`
+            }))
+          ]
+        }
+      },
+      leadership: {
+        executive: {
+          members: [
+            {
+              name: "Hafiz Kadir",
+              role: "Executive Chairman",
+              image: "/images/cofounders/ceo.png"
+            },
+            {
+              name: "Putera Shazmin",
+              role: "Vice Chairman",
+              image: "/images/cofounders/coo.png"
+            }
+          ]
+        }
+      }
+    },
+    keyHires: [
+      "Global Innovation President",
+      "Chief Sustainability Officer",
+      "Chief Metaverse Officer",
+      "Global Research Director"
+    ]
+  },
+  financials: {
+    revenue: {
+      target: "RM 10B",
+      breakdown: {
+        product: "RM 6B",
+        consulting: "RM 3B",
+        animation: "RM 1B"
+      }
+    },
+    burnRate: "RM 200M/month",
+    runway: "Highly Profitable",
+    valuation: "RM 50B",
+    funding: "Market Cap RM 50B",
+    status: "Fortune 100"
+  },
+  ventures: {
+    CareerRPG: { 
+      status: "Global EdTech Leader", 
+      users: "50M+",
+      revenue: "RM 2.5B ARR",
+      stage: "Industry Standard"
+    },
+    ServisLah: { 
+      status: "Global Enterprise Platform",
+      users: "1M businesses",
+      revenue: "RM 1.5B ARR",
+      stage: "Industry Leader"
+    },
+    ARespiratory: {
+      status: "Global Healthcare Standard",
+      users: "500K medical institutions",
+      revenue: "RM 700M ARR",
+      stage: "Industry Standard"
+    }
+  },
+  subsidiaries: [
+    {
+      name: "NexzGen Global Technologies",
+      revenue: "RM 4B ARR",
+      stage: "Fortune 500",
+      ventures: [
+        {
+          name: "Career & Workforce Solutions",
+          revenue: "RM 2.5B ARR",
+          valuation: "RM 25B"
+        },
+        {
+          name: "Enterprise & Cloud Services",
+          revenue: "RM 1.5B ARR",
+          valuation: "RM 15B"
+        }
+      ]
+    },
+    {
+      name: "NexzGen Healthcare & Education",
+      revenue: "RM 700M ARR",
+      stage: "Global Leader",
+      units: [
+        {
+          name: "Medical Technology Solutions",
+          revenue: "RM 500M ARR",
+          stage: "Industry Standard"
+        },
+        {
+          name: "Global Education Technologies",
+          revenue: "RM 200M ARR",
+          stage: "Market Leader"
+        }
+      ]
+    },
+    {
+      name: "NexzGen Future Technologies",
+      revenue: "RM 300M ARR",
+      stage: "Innovation Leader",
+      units: [
+        {
+          name: "Quantum Computing Division",
+          revenue: "RM 150M ARR",
+          stage: "Global Pioneer"
+        },
+        {
+          name: "Metaverse Solutions",
+          revenue: "RM 100M ARR",
+          stage: "Industry Standard"
+        },
+        {
+          name: "Sustainable Tech",
+          revenue: "RM 50M ARR",
+          stage: "Global Leader"
+        }
+      ]
+    }
+  ],
+  equity: {
+    founders: "25%",
+    investors: "65%",
+    esop: "10%",
+    details: "Dual Listed Global Entity"
+  },
+  milestones: [
+    "Fortune 100 Entry",
+    "50M+ Active Users",
+    "Carbon Negative Operations",
+    "Quantum Computing Leadership",
+    "Global Tech Standard"
+  ],
+  risks: [
+    "Technological Singularity",
+    "Global Economic Shifts",
+    "Regulatory Evolution",
+    "Climate Impact",
+    "Innovation Competition"
+  ]
+}
+  
 };
 
 export default roadmapData;

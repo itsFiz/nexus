@@ -3,8 +3,9 @@
 // import { prisma } from '@/lib/db';
 // import { JWT } from 'next-auth/jwt';
 // import { Session } from 'next-auth';
-// import CredentialsProvider from "next-auth/providers/credentials";
 import { DefaultSession } from "next-auth";
+import { NextAuthOptions } from 'next-auth';
+import CredentialsProvider from "next-auth/providers/credentials";
 
 // Extend the built-in session types
 declare module "next-auth" {
@@ -21,42 +22,42 @@ declare module "next-auth" {
 //   password?: string;
 // }
 
-// export const authOptions: NextAuthOptions = {
-//   providers: [
-//     CredentialsProvider({
-//       name: 'Credentials',
-//       credentials: {
-//         email: { label: "Email", type: "email" },
-//         password: { label: "Password", type: "password" }
-//       },
-//       async authorize(credentials: Record<"email" | "password", string> | undefined) {
-//         if (!credentials?.email || !credentials?.password) {
-//           return null;
-//         }
-//         // Add your authentication logic here
-//         return null;
-//       }
-//     })
-//   ],
-//   adapter: PrismaAdapter(prisma),
-//   session: {
-//     strategy: 'jwt'
-//   },
-//   callbacks: {
-//     async session({ session, token }: { session: Session, token: JWT }) {
-//       if (token.sub && session.user) {
-//         const user = await prisma.user.findUnique({
-//           where: { id: token.sub }
-//         });
-//         if (user) {
-//           session.user.id = user.id;
-//           session.user.role = user.role;
-//         }
-//       }
-//       return session;
-//     }
-//   }
-// };
+export const authOptions: NextAuthOptions = {
+  providers: [
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" }
+      },
+      async authorize(credentials: Record<"email" | "password", string> | undefined) {
+        if (!credentials?.email || !credentials?.password) {
+          return null;
+        }
+        // Add your authentication logic here
+        return null;
+      }
+    })
+  ],
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
+  cookies: {
+    sessionToken: {
+      name: process.env.NODE_ENV === 'production' ? '__Secure-next-auth.session-token' : 'next-auth.session-token',
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: process.env.NODE_ENV === 'production'
+      }
+    }
+  },
+  pages: {
+    signIn: '/auth/signin',
+  }
+}
 
 export function validateApiKey(apiKey: string | undefined): boolean {
   if (!apiKey) return false;

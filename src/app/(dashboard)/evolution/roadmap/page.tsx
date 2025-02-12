@@ -7,6 +7,8 @@ import {
   ArrowUpRight,
   LucideIcon,
   Package,
+  ChevronDown,
+  ChevronRight,
 } from 'lucide-react';
 import roadmapData from '@/lib/validators/data/evolution';
 import { 
@@ -18,7 +20,7 @@ import Image from 'next/image';
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
-type YearKey = '2025' | '2026' | '2028' | '2030' | '2040';
+type YearKey = '2024' | '2025' | '2026' | '2027' | '2028' | '2029' | '2030' | '2032' | '2035' | '2037' | '2040';
 
 // type RoadmapData = {
 //   [key in YearKey]: {
@@ -56,6 +58,8 @@ type YearKey = '2025' | '2026' | '2028' | '2030' | '2040';
 //       name: string;
 //       revenue: string;
 //       stage: string;
+//       description?: string;
+//       details?: string[];
 //       ventures?: Array<{
 //         name: string;
 //         revenue: string;
@@ -98,39 +102,31 @@ const formatCurrency = (value: string) => {
   return parseInt(value.replace(/[^0-9]/g, ''));
 };
 
-// // Add these type definitions
-// type TeamMember = {
-//   name: string;
-//   role: string;
-//   image?: string;
-//   count?: number;
-// };
+type TeamMember = { name: string; role: string; image?: string };
+type TeamStructure = { members: TeamMember[] } | { [key: string]: { members: TeamMember[] } };
+type TeamBreakdown = { [category: string]: TeamStructure };
 
-// type DepartmentRoles = {
-//   [role: string]: {
-//     members?: TeamMember[];
-//     count?: number;
-//   };
+// type Department = {
+//   [role: string]: DepartmentRole;
 // };
-
-type TeamBreakdown = {
-  [category: string]: number;
-};
 
 const EvolutionRoadmap = () => {
-  const { data: session, status } = useSession({
-    required: true,
-    onUnauthenticated() {
-      redirect('/auth/signin');
-    },
-  });
+  const { status } = useSession();
+  const [selectedYear, setSelectedYear] = useState<YearKey>('2024');
+  const [selectedTab, setSelectedTab] = useState('overview');
+  const [expandedSubsidiaries, setExpandedSubsidiaries] = useState<{[key: string]: boolean}>({});
 
-  if (status === "loading") {
-    return <div>Loading...</div>;
+  if (status === "unauthenticated") {
+    redirect('/auth/signin');
   }
 
-  const [selectedYear, setSelectedYear] = useState<YearKey>('2025');
-  const [selectedTab, setSelectedTab] = useState('overview');
+  if (status === "loading") {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-lg">Loading...</div>
+      </div>
+    );
+  }
 
   const renderMetricCard = ({ 
     icon: Icon,
@@ -229,6 +225,8 @@ const EvolutionRoadmap = () => {
     ownership?: string;
     ventures?: Venture[];
     units?: Unit[];
+    description?: string;
+    details?: string[];
   }, depth = 0) => (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
@@ -242,6 +240,9 @@ const EvolutionRoadmap = () => {
       <div className="flex justify-between items-start">
         <div>
           <h3 className="font-semibold text-lg text-gray-200">{entity.name}</h3>
+          {entity.description && (
+            <p className="text-sm text-gray-400 mt-1">{entity.description}</p>
+          )}
           {entity.revenue && (
             <p className="text-sm text-gray-400">Revenue: {entity.revenue}</p>
           )}
@@ -258,6 +259,18 @@ const EvolutionRoadmap = () => {
           </span>
         )}
       </div>
+
+      {entity.details && entity.details.length > 0 && (
+        <div className="mt-4 space-y-2">
+          <h4 className="text-sm font-medium text-gray-400">Key Functions:</h4>
+          <ul className="list-disc list-inside space-y-1">
+            {entity.details.map((detail, index) => (
+              <li key={index} className="text-sm text-gray-300">{detail}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       {entity.ventures && (
         <div className="mt-4 space-y-3">
           {entity.ventures.map((venture, index) => (
@@ -279,43 +292,33 @@ const EvolutionRoadmap = () => {
     </motion.div>
   );
 
-  const renderTeamMember = (member: { name: string; role: string; image?: string }) => (
-    <div className="flex items-center space-x-4 bg-gray-800/50 p-4 rounded-lg">
-      <Image
-        src={member.image || '/images/profiledefault.jpg'} 
-        alt={member.name}
-        width={48}
-        height={48}
-        className="rounded-full"
-      />
-      <div>
-        <div className="text-gray-200 font-medium">{member.name}</div>
-        <div className="text-sm text-gray-400">{member.role}</div>
-      </div>
-    </div>
-  );
+  // const renderTeamMember = (member: { name: string; role: string; image?: string }) => (
+  //   <div className="flex items-center space-x-4 bg-gray-800/50 p-4 rounded-lg">
+  //     <Image
+  //       src={member.image || '/images/profiledefault.jpg'} 
+  //       alt={member.name}
+  //       width={48}
+  //       height={48}
+  //       className="rounded-full"
+  //     />
+  //     <div>
+  //       <div className="text-gray-200 font-medium">{member.name}</div>
+  //       <div className="text-sm text-gray-400">{member.role}</div>
+  //     </div>
+  //   </div>
+  // );
 
-  const renderTeamBreakdown = (category: string, roles: { [key: string]: { members?: Array<{ name: string; role: string; image?: string }> } }) => (
-    <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      className="bg-gray-900 border border-white/10 p-6 rounded-xl border-l-4 border-l-violet-500 mb-4"
-    >
-      <h3 className="font-semibold text-lg text-gray-200 capitalize mb-4">{category}</h3>
-      {Object.entries(roles).map(([role, { members = [] }]) => (
-        <div key={role} className="mb-4">
-          <h4 className="text-gray-400 capitalize mb-3">{role}</h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {members?.map((member, idx) => (
-              <div key={idx}>
-                {renderTeamMember(member)}
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
-    </motion.div>
-  );
+  const renderTeamBreakdown = (_: string, breakdown: TeamBreakdown) => {
+    return Object.entries(breakdown)
+      .map(([category, structure]) => {
+        const count = 'members' in structure && Array.isArray(structure.members)
+          ? structure.members.length 
+          : Object.values(structure as { [key: string]: { members: TeamMember[] } })
+              .reduce((sum, s) => sum + s.members.length, 0);
+        return `${count} ${category}`;
+      })
+      .join(' / ') || 'No breakdown available';
+  };
 
   // // Transform nested breakdown data for the pie chart
   // const getTeamBreakdownData = () => {
@@ -343,16 +346,30 @@ const EvolutionRoadmap = () => {
             <h1 className="text-2xl font-bold">Company Evolution</h1>
             <p className="text-gray-400">Track NexzGen&apos;s journey from startup to IPO</p>
           </div>
-          <div className="flex gap-2">
+          {/* Year Selection with Progress Line */}
+          <div className="flex items-center gap-2 relative min-w-[600px]">
+            {/* Background Line - Made more visible */}
+            <div className="absolute h-1 bg-gray-600/50 top-1/2 -translate-y-1/2 left-0 right-0 -z-20 w-full" />
+            
+            {/* Progress Line */}
+            <div 
+              className="absolute h-1 bg-gradient-to-r from-violet-500 to-blue-500 top-1/2 -translate-y-1/2 left-0 -z-10" 
+              style={{
+                width: `${(Object.keys(roadmapData).indexOf(selectedYear) + 1) * 100 / Object.keys(roadmapData).length}%`
+              }}
+            />
+            
             {Object.keys(roadmapData).map((year) => (
               <button
                 key={year}
                 onClick={() => setSelectedYear(year as YearKey)}
-                className={`px-4 py-2 rounded-lg transition-colors ${
-                  selectedYear === year 
-                    ? 'bg-violet-500 text-white' 
+                className={`
+                  px-4 py-2 rounded-lg transition-all relative
+                  ${selectedYear === year 
+                    ? 'bg-violet-500 text-white ring-2 ring-violet-400 ring-offset-2 ring-offset-gray-900' 
                     : 'bg-gray-900 border border-white/10 text-gray-400 hover:bg-white/5'
-                }`}
+                  }
+                `}
               >
                 {year}
               </button>
@@ -403,13 +420,7 @@ const EvolutionRoadmap = () => {
               icon: Users,
               label: "Team Size",
               value: roadmapData[selectedYear].team.total,
-              subValue: (() => {
-                const teamBreakdown = roadmapData[selectedYear].team.breakdown as TeamBreakdown;
-                const coFounders = teamBreakdown?.coFounders || 0;
-                const interns = teamBreakdown?.interns || 0;
-                
-                return `${coFounders} Co-Founders / ${interns} Interns`;
-              })()
+              subValue: renderTeamBreakdown(selectedYear, roadmapData[selectedYear].team.breakdown)
             })}
           </motion.div>
 
@@ -517,9 +528,9 @@ const EvolutionRoadmap = () => {
 
           {selectedTab === 'team' && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {Object.entries(roadmapData[selectedYear].team.breakdown).map(([category, roles], index) => (
-                <div key={`${category}-${index}`}>
-                  {typeof roles === 'object' ? renderTeamBreakdown(category, roles) : null}
+              {Object.entries(roadmapData[selectedYear].team.breakdown).map(([category, structure]) => (
+                <div key={category}>
+                  {renderTeamBreakdown(category, structure)}
                 </div>
               ))}
             </div>
@@ -658,8 +669,39 @@ const EvolutionRoadmap = () => {
           {selectedTab === 'structure' && (
             <div className="space-y-6">
               {roadmapData[selectedYear].subsidiaries?.map((subsidiary, index) => (
-                <div key={index}>
-                  {renderEntityCard(subsidiary)}
+                <div 
+                  key={index} 
+                  onClick={() => setExpandedSubsidiaries(prev => ({
+                    ...prev,
+                    [subsidiary.name]: !prev[subsidiary.name]
+                  }))}
+                >
+                  <motion.div className="cursor-pointer">
+                    <div className="flex items-center gap-2">
+                      {expandedSubsidiaries[subsidiary.name] ? 
+                        <ChevronDown size={20} /> : 
+                        <ChevronRight size={20} />
+                      }
+                      {renderEntityCard({
+                        ...subsidiary,
+                        description: getSubsidiaryDescription(subsidiary.name),
+                        details: expandedSubsidiaries[subsidiary.name] ? 
+                          getSubsidiaryDetails(subsidiary.name) : [],
+                        ventures: expandedSubsidiaries[subsidiary.name] ? 
+                          subsidiary.ventures?.map(venture => ({
+                            ...venture,
+                            description: getVentureDescription(venture.name),
+                            details: getVentureDetails(venture.name)
+                          })) : [],
+                        units: expandedSubsidiaries[subsidiary.name] ? 
+                          subsidiary.units?.map(unit => ({
+                            ...unit,
+                            description: getUnitDescription(unit.name),
+                            details: getUnitDetails(unit.name)
+                          })) : []
+                      })}
+                    </div>
+                  </motion.div>
                 </div>
               ))}
             </div>
@@ -735,3 +777,101 @@ export default EvolutionRoadmap;
 //   title: 'Evolution Roadmap',
 //   description: 'Track NexzGen\'s journey from startup to IPO',
 // }
+
+const getSubsidiaryDescription = (name: string): string => {
+  const descriptions: { [key: string]: string } = {
+    'NexzGen Labs': 'Technology Research & Development Hub',
+    'NexzGen Digital': 'Digital Products & Services Division',
+    'NexzGen Ventures': 'Strategic Investment & Innovation Arm',
+    // Add more descriptions as needed
+  };
+  return descriptions[name] || '';
+};
+
+const getSubsidiaryDetails = (name: string): string[] => {
+  const details: { [key: string]: string[] } = {
+    'NexzGen Labs': [
+      'Advanced Technology Research',
+      'Product Development & Innovation',
+      'Technical Consulting Services',
+      'Enterprise Solutions Development',
+      'Digital Transformation Projects'
+    ],
+    'NexzGen Digital': [
+      'Digital Product Management',
+      'Software as a Service (SaaS)',
+      'Digital Marketing Solutions',
+      'User Experience Design',
+      'Data Analytics Services'
+    ],
+    'NexzGen Ventures': [
+      'Strategic Investments',
+      'Startup Incubation',
+      'Corporate Innovation Programs',
+      'Venture Capital Management',
+      'Partnership Development'
+    ],
+    // Add more details as needed
+  };
+  return details[name] || [];
+};
+
+const getVentureDescription = (name: string): string => {
+  const descriptions: { [key: string]: string } = {
+    'CareerRPG': 'Gamified Career Development Platform',
+    'Blanjer': 'Personal Finance Management Solution',
+    // Add more descriptions as needed
+  };
+  return descriptions[name] || '';
+};
+
+const getVentureDetails = (name: string): string[] => {
+  const details: { [key: string]: string[] } = {
+    'CareerRPG': [
+      'Skills Assessment & Development',
+      'Career Path Visualization',
+      'Professional Network Building',
+      'Achievement Tracking',
+      'Personalized Learning Paths'
+    ],
+    'Blanjer': [
+      'Expense Tracking',
+      'Budget Management',
+      'Financial Analytics',
+      'Investment Planning',
+      'Bill Payment Automation'
+    ],
+    // Add more details as needed
+  };
+  return details[name] || [];
+};
+
+const getUnitDescription = (name: string): string => {
+  const descriptions: { [key: string]: string } = {
+    'Tech Innovation': 'Core Technology Development Unit',
+    'Digital Services': 'Digital Solutions Provider',
+    // Add more descriptions as needed
+  };
+  return descriptions[name] || '';
+};
+
+const getUnitDetails = (name: string): string[] => {
+  const details: { [key: string]: string[] } = {
+    'Tech Innovation': [
+      'Emerging Technology Research',
+      'Prototype Development',
+      'Technology Stack Optimization',
+      'Innovation Labs Management',
+      'Technical Documentation'
+    ],
+    'Digital Services': [
+      'Web Application Development',
+      'Mobile App Development',
+      'Cloud Solutions',
+      'API Integration Services',
+      'Technical Support'
+    ],
+    // Add more details as needed
+  };
+  return details[name] || [];
+};

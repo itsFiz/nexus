@@ -31,6 +31,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 const navigationItems = [
   {
@@ -282,13 +283,16 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         {/* Logo */}
         <div className="h-32 flex-shrink-0 flex items-center justify-center px-4 border-b border-white/10 relative">
           {isSidebarOpen && (
-            <motion.img
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              src="/images/nexzgenlogo.png"
-              alt="Nexus"
-              className="h-28"
-            />
+            <motion.div>
+              <Image
+                src="/images/nexzgenlogo.png"
+                alt="Nexus"
+                width={112}  // Adjust based on your logo's dimensions (28 * 4)
+                height={112} // Adjust based on your logo's dimensions (28 * 4)
+                className="h-28"
+                priority
+              />
+            </motion.div>
           )}
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -399,9 +403,11 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                 className="flex items-center space-x-3 p-2 hover:bg-white/10 rounded-lg"
               >
                 {user?.profile?.avatar ? (
-                  <img
+                  <Image
                     src={user.profile.avatar}
                     alt={user.name}
+                    width={32}
+                    height={32}
                     className="w-8 h-8 rounded-full object-cover"
                   />
                 ) : (
