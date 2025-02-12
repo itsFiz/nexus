@@ -111,14 +111,16 @@ type TeamBreakdown = { [category: string]: TeamStructure };
 // };
 
 const EvolutionRoadmap = () => {
-  const { status } = useSession();
+  const { data: session, status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect('/auth/signin')
+    },
+  });
+
   const [selectedYear, setSelectedYear] = useState<YearKey>('2024');
   const [selectedTab, setSelectedTab] = useState('overview');
   const [expandedSubsidiaries, setExpandedSubsidiaries] = useState<{[key: string]: boolean}>({});
-
-  if (status === "unauthenticated") {
-    redirect('/auth/signin');
-  }
 
   if (status === "loading") {
     return (

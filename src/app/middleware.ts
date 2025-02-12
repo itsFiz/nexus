@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server';
 import { verify } from 'jsonwebtoken';
 
 // Paths that don't require authentication
-const publicPaths = ['/', '/login', '/register', '/api/auth/login', '/api/auth/register'];
+const publicPaths = ['/', '/login', '/register', '/api/auth/login', '/api/auth/register', '/auth/signin'];
 
 // Add this interface near the top of the file, after the imports
 interface JWTPayload {
