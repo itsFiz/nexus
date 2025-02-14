@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Building2, TrendingUp, Users, Wallet,
-  
   ArrowUpRight,
   LucideIcon,
   Package,
@@ -145,6 +144,16 @@ type TeamBreakdown = { [category: string]: TeamStructure };
 //   [role: string]: DepartmentRole;
 // };
 
+type Entity = {
+  name: string;
+  revenue?: string;
+  stage?: string;
+  description?: string;
+  services?: string[];
+  divisions?: Entity[];
+  units?: Entity[];
+};
+
 const EvolutionRoadmap = () => {
   const { status } = useSession({
     required: true,
@@ -263,7 +272,7 @@ const EvolutionRoadmap = () => {
     </div>
   );
 
-  const renderEntityCard = (entity: any, depth: number = 0) => {
+  const renderEntityCard = (entity: Entity, depth: number = 0) => {
     return (
       <motion.div
         initial={{ opacity: 0, x: -20 }}
@@ -898,7 +907,6 @@ const getSubsidiaryDescription = (name: string): string => {
     'NexzGen Labs': 'Technology Research & Development Hub',
     'NexzGen Digital': 'Digital Products & Services Division',
     'NexzGen Ventures': 'Strategic Investment & Innovation Arm',
-    // Add more descriptions as needed
   };
   return descriptions[name] || '';
 };
@@ -926,7 +934,6 @@ const getSubsidiaryDetails = (name: string): string[] => {
       'Venture Capital Management',
       'Partnership Development'
     ],
-    // Add more details as needed
   };
   return details[name] || [];
 };
