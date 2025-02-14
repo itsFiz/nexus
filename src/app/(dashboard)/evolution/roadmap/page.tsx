@@ -49,6 +49,21 @@ type Entity = {
   units?: Entity[];
 };
 
+// Add type for divisions/units
+type EntityWithChildren = Entity & {
+  divisions?: EntityWithChildren[];
+  units?: EntityWithChildren[];
+};
+
+// Add type for subsidiary data
+type SubsidiaryData = {
+  name: string;
+  divisions?: EntityWithChildren[];
+  units?: EntityWithChildren[];
+  description?: string;
+  services?: string[];
+};
+
 const EvolutionRoadmap = () => {
   const { status } = useSession({
     required: true,
@@ -166,7 +181,7 @@ const EvolutionRoadmap = () => {
     </div>
   );
 
-  const renderEntityCard = (entity: Entity, depth: number = 0) => {
+  const renderEntityCard = (entity: EntityWithChildren, depth: number = 0) => {
     return (
       <motion.div
         initial={{ opacity: 0, x: -20 }}
@@ -206,12 +221,12 @@ const EvolutionRoadmap = () => {
 
         {(entity.divisions || entity.units) && (
           <div className="mt-4 space-y-3">
-            {entity.divisions?.map((division: any, index: number) => (
+            {entity.divisions?.map((division: EntityWithChildren, index: number) => (
               <div key={index} className="ml-4">
                 {renderEntityCard(division, depth + 1)}
               </div>
             ))}
-            {entity.units?.map((unit: any, index: number) => (
+            {entity.units?.map((unit: EntityWithChildren, index: number) => (
               <div key={index} className="ml-4">
                 {renderEntityCard(unit, depth + 1)}
               </div>
@@ -692,7 +707,7 @@ const EvolutionRoadmap = () => {
 
           {selectedTab === 'structure' && (
             <div className="space-y-6">
-              {roadmapData[selectedYear as keyof typeof roadmapData].subsidiaries.map((subsidiary: any, index: number) => (
+              {roadmapData[selectedYear as keyof typeof roadmapData].subsidiaries.map((subsidiary: SubsidiaryData, index: number) => (
                 <div 
                   key={index} 
                   className="w-full"
