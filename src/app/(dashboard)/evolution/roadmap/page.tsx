@@ -16,115 +16,14 @@ import {
   Timer,
   Target
 } from 'lucide-react';
-import roadmapData, { RoadmapYear } from '@/lib/validators/data/evolution';
+import roadmapData from '@/lib/validators/data/evolution';
 import { 
-   Cell, 
-  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
-  AreaChart, Area, Legend, CartesianGrid
+  AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer,
+  Legend, CartesianGrid
 } from 'recharts';
 import Image from 'next/image';
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-
-type YearKey = '2024' | '2025' | '2026' | '2027' | '2028' | '2029' | '2030' | '2032' | '2035' | '2037' | '2040';
-
-// type RoadmapData = {
-//   [key in YearKey]: {
-//     structure: string;
-//     valuation: string;
-//     funding: string;
-//     status: string;
-//     team: {
-//       total: number;
-//       breakdown: {
-//         [key: string]: number;
-//       };
-//       keyHires: string[];
-//     };
-//     financials: {
-//       revenue: {
-//         target: string;
-//         breakdown: {
-//           [key: string]: string;
-//         };
-//       };
-//       burnRate: string;
-//       runway: string;
-//     };
-//     ventures: {
-//       [key: string]: {
-//         status: string;
-//         users?: string;
-//         revenue?: string;
-//         stage?: string;
-//         [key: string]: string | undefined;
-//       };
-//     };
-//     subsidiaries: Array<{
-//       name: string;
-//       revenue: string;
-//       stage: string;
-//       description?: string;
-//       details?: string[];
-//       ventures?: Array<{
-//         name: string;
-//         revenue: string;
-//         valuation?: string;
-//         stage?: string;
-//       }>;
-//       units?: Array<{
-//         name: string;
-//         revenue: string;
-//         stage?: string;
-//       }>;
-//     }>;
-//     equity: {
-//       founders: string;
-//       investors: string;
-//       esop: string;
-//       details: string;
-//     };
-//     milestones: string[];
-//     risks: string[];
-//   };
-// };
-
-// type RoadmapYear = {
-//   structure: string;
-//   valuation: string;
-//   funding: string;
-//   status: string;
-//   team: { /* ... */ };
-//   financials: { /* ... */ };
-//   ventures: { /* ... */ };
-//   milestones: string[];
-//   equity: {
-//     founders: string;
-//     investors: string;
-//     esop: string;
-//     details: string;
-//   };
-//   // ... other properties
-// };
-
-type Venture = {
-  name: string;
-  valuation?: string;
-  revenue?: string;
-  stage?: string;
-};
-
-type Unit = {
-  name: string;
-  revenue?: string;
-  ventures?: Venture[];
-};
-
-const COLORS = ['#9333ea', '#60a5fa', '#4ade80', '#f87171', '#facc15'];
-
-const formatCurrency = (value: string) => {
-  return parseInt(value.replace(/[^0-9]/g, ''));
-};
 
 type TeamMember = {
   name: string;
@@ -139,10 +38,6 @@ type TeamStructure = {
 };
 
 type TeamBreakdown = { [category: string]: TeamStructure };
-
-// type Department = {
-//   [role: string]: DepartmentRole;
-// };
 
 type Entity = {
   name: string;
@@ -165,7 +60,6 @@ const EvolutionRoadmap = () => {
   const [selectedYear, setSelectedYear] = useState<keyof typeof roadmapData>('2024');
   const [selectedTab, setSelectedTab] = useState('overview');
   const [expandedSubsidiaries, setExpandedSubsidiaries] = useState<{[key: string]: boolean}>({});
-  const [yAxisRange, setYAxisRange] = useState<'1M' | '10M' | '100M' | '1B' | '10B'>('1M');
   const [yearRange, setYearRange] = useState<{ start: string; end: string }>({
     start: '2024',
     end: '2050'
@@ -350,7 +244,7 @@ const EvolutionRoadmap = () => {
         const count = 'members' in structure && Array.isArray(structure.members)
           ? structure.members.length 
           : Object.values(structure as { [key: string]: { members: TeamMember[] } })
-              .reduce((sum, s) => sum + s.members.length, 0);
+              .reduce((sum, s) => s.members.length, 0);
         return `${count} ${category}`;
       })
       .join(' / ') || 'No breakdown available';
@@ -934,68 +828,6 @@ const getSubsidiaryDetails = (name: string): string[] => {
       'Venture Capital Management',
       'Partnership Development'
     ],
-  };
-  return details[name] || [];
-};
-
-const getVentureDescription = (name: string): string => {
-  const descriptions: { [key: string]: string } = {
-    'CareerRPG': 'Gamified Career Development Platform',
-    'Blanjer': 'Personal Finance Management Solution',
-    'ARespiratory': 'AR-Powered Healthcare Solution',
-    'ServisLah': 'On-Demand Car Service App',
-    // Add more descriptions as needed
-  };
-  return descriptions[name] || '';
-};
-
-const getVentureDetails = (name: string): string[] => {
-  const details: { [key: string]: string[] } = {
-    'CareerRPG': [
-      'Skills Assessment & Development',
-      'Career Path Visualization',
-      'Professional Network Building',
-      'Achievement Tracking',
-      'Personalized Learning Paths'
-    ],
-    'Blanjer': [
-      'Expense Tracking',
-      'Budget Management',
-      'Financial Analytics',
-      'Investment Planning',
-      'Bill Payment Automation'
-    ],
-    // Add more details as needed
-  };
-  return details[name] || [];
-};
-
-const getUnitDescription = (name: string): string => {
-  const descriptions: { [key: string]: string } = {
-    'Tech Innovation': 'Core Technology Development Unit',
-    'Digital Services': 'Digital Solutions Provider',
-    // Add more descriptions as needed
-  };
-  return descriptions[name] || '';
-};
-
-const getUnitDetails = (name: string): string[] => {
-  const details: { [key: string]: string[] } = {
-    'Tech Innovation': [
-      'Emerging Technology Research',
-      'Prototype Development',
-      'Technology Stack Optimization',
-      'Innovation Labs Management',
-      'Technical Documentation'
-    ],
-    'Digital Services': [
-      'Web Application Development',
-      'Mobile App Development',
-      'Cloud Solutions',
-      'API Integration Services',
-      'Technical Support'
-    ],
-    // Add more details as needed
   };
   return details[name] || [];
 };
