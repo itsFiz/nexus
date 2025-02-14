@@ -9,8 +9,15 @@ import {
   Package,
   ChevronDown,
   ChevronRight,
+  Code2,
+  Presentation,
+  Sparkles,
+  Lightbulb,
+  Flame,
+  Timer,
+  Target
 } from 'lucide-react';
-import roadmapData from '@/lib/validators/data/evolution';
+import roadmapData, { RoadmapYear } from '@/lib/validators/data/evolution';
 import { 
    Cell, 
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
@@ -83,6 +90,24 @@ type YearKey = '2024' | '2025' | '2026' | '2027' | '2028' | '2029' | '2030' | '2
 //   };
 // };
 
+// type RoadmapYear = {
+//   structure: string;
+//   valuation: string;
+//   funding: string;
+//   status: string;
+//   team: { /* ... */ };
+//   financials: { /* ... */ };
+//   ventures: { /* ... */ };
+//   milestones: string[];
+//   equity: {
+//     founders: string;
+//     investors: string;
+//     esop: string;
+//     details: string;
+//   };
+//   // ... other properties
+// };
+
 type Venture = {
   name: string;
   valuation?: string;
@@ -102,8 +127,18 @@ const formatCurrency = (value: string) => {
   return parseInt(value.replace(/[^0-9]/g, ''));
 };
 
-type TeamMember = { name: string; role: string; image?: string };
-type TeamStructure = { members: TeamMember[] } | { [key: string]: { members: TeamMember[] } };
+type TeamMember = {
+  name: string;
+  role: string;
+  image?: string;
+};
+
+type TeamStructure = { 
+  members: TeamMember[] 
+} | { 
+  [key: string]: { members: TeamMember[] } 
+};
+
 type TeamBreakdown = { [category: string]: TeamStructure };
 
 // type Department = {
@@ -118,9 +153,14 @@ const EvolutionRoadmap = () => {
     },
   });
 
-  const [selectedYear, setSelectedYear] = useState<YearKey>('2024');
+  const [selectedYear, setSelectedYear] = useState<keyof typeof roadmapData>('2024');
   const [selectedTab, setSelectedTab] = useState('overview');
   const [expandedSubsidiaries, setExpandedSubsidiaries] = useState<{[key: string]: boolean}>({});
+  const [yAxisRange, setYAxisRange] = useState<'1M' | '10M' | '100M' | '1B' | '10B'>('1M');
+  const [yearRange, setYearRange] = useState<{ start: string; end: string }>({
+    start: '2024',
+    end: '2050'
+  });
 
   if (status === "loading") {
     return (
@@ -223,96 +263,77 @@ const EvolutionRoadmap = () => {
     </div>
   );
 
-  const renderEntityCard = (entity: {
-    name: string;
-    revenue?: string;
-    valuation?: string;
-    status?: string;
-    ownership?: string;
-    ventures?: Venture[];
-    units?: Unit[];
-    description?: string;
-    details?: string[];
-  }, depth = 0) => (
-    <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      className={`bg-gray-900 border border-white/10 p-6 rounded-xl ${
-        depth === 0 ? 'border-l-4 border-l-violet-500' :
-        depth === 1 ? 'border-l-4 border-l-blue-500' :
-        'border-l-4 border-l-green-500'
-      }`}
-    >
-      <div className="flex justify-between items-start">
-        <div>
-          <h3 className="font-semibold text-lg text-gray-200">{entity.name}</h3>
-          {entity.description && (
-            <p className="text-sm text-gray-400 mt-1">{entity.description}</p>
-          )}
-          {entity.revenue && (
-            <p className="text-sm text-gray-400">Revenue: {entity.revenue}</p>
-          )}
-          {entity.valuation && (
-            <p className="text-sm text-gray-400">Valuation: {entity.valuation}</p>
-          )}
-          {entity.status && (
-            <p className="text-sm text-gray-400">Status: {entity.status}</p>
-          )}
+  const renderEntityCard = (entity: any, depth: number = 0) => {
+    return (
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        className={`bg-gray-900 border border-white/10 p-6 rounded-xl ${
+          depth === 0 ? 'border-l-4 border-l-violet-500' :
+          depth === 1 ? 'border-l-4 border-l-blue-500' :
+          'border-l-4 border-l-green-500'
+        }`}
+      >
+        <div className="flex justify-between items-start">
+          <div>
+            <h3 className="font-semibold text-lg text-gray-200">{entity.name}</h3>
+            {(entity.description || getSubsidiaryDescription(entity.name)) && (
+              <p className="text-sm text-gray-400 mt-1">
+                {entity.description || getSubsidiaryDescription(entity.name)}
+              </p>
+            )}
+            {entity.revenue && (
+              <p className="text-sm text-gray-400">Revenue: {entity.revenue}</p>
+            )}
+            {entity.stage && (
+              <p className="text-sm text-gray-400">Stage: {entity.stage}</p>
+            )}
+            {(entity.services || getSubsidiaryDetails(entity.name)) && (
+              <div className="mt-2">
+                <p className="text-sm text-gray-400">Services:</p>
+                <ul className="list-disc list-inside mt-1">
+                  {(entity.services || getSubsidiaryDetails(entity.name)).map((service: string, index: number) => (
+                    <li key={index} className="text-sm text-gray-300">{service}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
-        {entity.ownership && (
-          <span className="px-3 py-1 bg-violet-400/10 text-violet-400 rounded-full text-sm">
-            {entity.ownership}
-          </span>
-        )}
-      </div>
 
-      {entity.details && entity.details.length > 0 && (
-        <div className="mt-4 space-y-2">
-          <h4 className="text-sm font-medium text-gray-400">Key Functions:</h4>
-          <ul className="list-disc list-inside space-y-1">
-            {entity.details.map((detail, index) => (
-              <li key={index} className="text-sm text-gray-300">{detail}</li>
+        {(entity.divisions || entity.units) && (
+          <div className="mt-4 space-y-3">
+            {entity.divisions?.map((division: any, index: number) => (
+              <div key={index} className="ml-4">
+                {renderEntityCard(division, depth + 1)}
+              </div>
             ))}
-          </ul>
-        </div>
-      )}
+            {entity.units?.map((unit: any, index: number) => (
+              <div key={index} className="ml-4">
+                {renderEntityCard(unit, depth + 1)}
+              </div>
+            ))}
+          </div>
+        )}
+      </motion.div>
+    );
+  };
 
-      {entity.ventures && (
-        <div className="mt-4 space-y-3">
-          {entity.ventures.map((venture, index) => (
-            <div key={index} className="ml-4">
-              {renderEntityCard(venture, depth + 1)}
-            </div>
-          ))}
-        </div>
-      )}
-      {entity.units && (
-        <div className="mt-4 space-y-3">
-          {entity.units.map((unit, index) => (
-            <div key={index} className="ml-4">
-              {renderEntityCard(unit, depth + 1)}
-            </div>
-          ))}
-        </div>
-      )}
-    </motion.div>
+  const renderTeamMember = (member: { name: string; role: string; image?: string }) => (
+    <div className="flex items-center space-x-4 bg-gray-800/50 p-4 rounded-lg">
+      <Image
+        src={member.image || '/images/profiledefault.jpg'} 
+        alt={member.name}
+        width={48}
+        height={48}
+        className="rounded-full"
+      />
+      <div>
+        <div className="text-gray-200 font-medium">{member.name}</div>
+        <div className="text-sm text-gray-400">{member.role}</div>
+      </div>
+    </div>
   );
-
-  // const renderTeamMember = (member: { name: string; role: string; image?: string }) => (
-  //   <div className="flex items-center space-x-4 bg-gray-800/50 p-4 rounded-lg">
-  //     <Image
-  //       src={member.image || '/images/profiledefault.jpg'} 
-  //       alt={member.name}
-  //       width={48}
-  //       height={48}
-  //       className="rounded-full"
-  //     />
-  //     <div>
-  //       <div className="text-gray-200 font-medium">{member.name}</div>
-  //       <div className="text-sm text-gray-400">{member.role}</div>
-  //     </div>
-  //   </div>
-  // );
 
   const renderTeamBreakdown = (_: string, breakdown: TeamBreakdown) => {
     return Object.entries(breakdown)
@@ -326,22 +347,23 @@ const EvolutionRoadmap = () => {
       .join(' / ') || 'No breakdown available';
   };
 
-  // // Transform nested breakdown data for the pie chart
-  // const getTeamBreakdownData = () => {
-  //   const breakdown = roadmapData[selectedYear].team.breakdown;
-  //   const data: { name: string; value: number }[] = [];
+  const convertCurrencyToNumber = (value: string): number => {
+    // Remove 'RM' and any commas, then get the number and suffix
+    const cleanValue = value.replace(/[RM,\s]/g, '');
+    const match = cleanValue.match(/^(\d+\.?\d*)([KMB])?$/i);
     
-  //   Object.entries(breakdown).forEach(([category, roles]) => {
-  //     Object.entries(roles).forEach(([role, count]) => {
-  //       data.push({
-  //         name: `${category} ${role}`,
-  //         value: count
-  //       });
-  //     });
-  //   });
+    if (!match) return 0;
     
-  //   return data;
-  // };
+    const num = parseFloat(match[1]);
+    const suffix = match[2]?.toUpperCase() || '';
+    
+    switch (suffix) {
+      case 'K': return num * 1000;
+      case 'M': return num * 1000000;
+      case 'B': return num * 1000000000;
+      default: return num;
+    }
+  };
 
   return (
     <div className="min-h-screen p-6">
@@ -361,14 +383,14 @@ const EvolutionRoadmap = () => {
             <div 
               className="absolute h-1 bg-gradient-to-r from-violet-500 to-blue-500 top-1/2 -translate-y-1/2 left-0 -z-10" 
               style={{
-                width: `${(Object.keys(roadmapData).indexOf(selectedYear) + 1) * 100 / Object.keys(roadmapData).length}%`
+                width: `${(Object.keys(roadmapData).indexOf(selectedYear as string) + 1) * 100 / Object.keys(roadmapData).length}%`
               }}
             />
             
             {Object.keys(roadmapData).map((year) => (
               <button
                 key={year}
-                onClick={() => setSelectedYear(year as YearKey)}
+                onClick={() => setSelectedYear(year as keyof typeof roadmapData)}
                 className={`
                   px-4 py-2 rounded-lg transition-all relative
                   ${selectedYear === year 
@@ -395,8 +417,8 @@ const EvolutionRoadmap = () => {
             {renderMetricCard({
               icon: Building2,
               label: "Structure",
-              value: roadmapData[selectedYear].structure,
-              subValue: roadmapData[selectedYear].status
+              value: roadmapData[selectedYear as keyof typeof roadmapData].structure,
+              subValue: roadmapData[selectedYear as keyof typeof roadmapData].status
             })}
           </motion.div>
 
@@ -410,8 +432,8 @@ const EvolutionRoadmap = () => {
             {renderMetricCard({
               icon: Wallet,
               label: "Valuation",
-              value: roadmapData[selectedYear].valuation,
-              subValue: roadmapData[selectedYear].funding || 'N/A'
+              value: roadmapData[selectedYear as keyof typeof roadmapData].valuation,
+              subValue: roadmapData[selectedYear as keyof typeof roadmapData].funding || 'N/A'
             })}
           </motion.div>
 
@@ -425,8 +447,8 @@ const EvolutionRoadmap = () => {
             {renderMetricCard({
               icon: Users,
               label: "Team Size",
-              value: roadmapData[selectedYear].team.total,
-              subValue: renderTeamBreakdown(selectedYear, roadmapData[selectedYear].team.breakdown)
+              value: roadmapData[selectedYear as keyof typeof roadmapData].team.total,
+              subValue: renderTeamBreakdown(String(selectedYear), roadmapData[selectedYear as keyof typeof roadmapData].team.breakdown as TeamBreakdown)
             })}
           </motion.div>
 
@@ -440,8 +462,8 @@ const EvolutionRoadmap = () => {
             {renderMetricCard({
               icon: TrendingUp,
               label: "Revenue Target",
-              value: roadmapData[selectedYear].financials.revenue.target,
-              subValue: `Burn: ${roadmapData[selectedYear].financials.burnRate}`
+              value: roadmapData[selectedYear as keyof typeof roadmapData].financials.revenue.target,
+              subValue: `Burn: ${roadmapData[selectedYear as keyof typeof roadmapData].financials.burnRate}`
             })}
           </motion.div>
         </div>
@@ -475,7 +497,7 @@ const EvolutionRoadmap = () => {
                 <div>
                   <h4 className="text-sm font-medium text-gray-400 mb-3">Key Milestones</h4>
                   <div className="space-y-3">
-                    {roadmapData[selectedYear].milestones.map((milestone, index) => (
+                      {roadmapData[selectedYear as keyof typeof roadmapData].milestones.map((milestone: string, index: number) => (
                       <div key={index} className="flex items-center gap-3">
                         <div className="w-2 h-2 rounded-full bg-violet-500" />
                         <span className="text-gray-300">{milestone}</span>
@@ -487,35 +509,70 @@ const EvolutionRoadmap = () => {
                 {/* Revenue Breakdown */}
                 <div>
                   <h4 className="text-sm font-medium text-gray-400 mb-3">Revenue Breakdown</h4>
-                  <div className="grid grid-cols-2 gap-4">
-                    {Object.entries(roadmapData[selectedYear].financials.revenue.breakdown).map(([category, amount]) => (
-                      <div key={category} className="bg-gray-800/50 p-4 rounded-lg">
-                        <div className="text-sm text-gray-400 capitalize">{category}</div>
-                        <div className="text-lg font-semibold text-gray-200">{amount}</div>
-                      </div>
-                    ))}
+                  <div className="grid grid-cols-3 gap-4">
+                    {Object.entries(roadmapData[selectedYear as keyof typeof roadmapData].financials.revenue.breakdown).map(([category, amount]) => {
+                      const getIconConfig = (cat: string) => {
+                        switch (cat.toLowerCase()) {
+                          case 'product':
+                            return { icon: Code2, color: 'text-violet-400' };
+                          case 'consulting':
+                            return { icon: Presentation, color: 'text-blue-400' };
+                          case 'animation':
+                            return { icon: Sparkles, color: 'text-emerald-400' };
+                          default:
+                            return { icon: Code2, color: 'text-gray-400' };
+                        }
+                      };
+
+                      const { icon: Icon, color } = getIconConfig(category);
+
+                      return (
+                        <div key={category} className="bg-gray-800/50 p-4 rounded-lg">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Icon className={`w-5 h-5 ${color}`} />
+                            <div className="text-sm text-gray-400 capitalize">{category}</div>
+                          </div>
+                          <div className="text-lg font-semibold text-gray-200">{amount}</div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
 
-                {/* Equity Dilution */}
-                <div className="mt-6">
+                {/* Equity Distribution */}
+                <div>
                   <h4 className="text-sm font-medium text-gray-400 mb-3">Equity Distribution</h4>
                   <div className="grid grid-cols-3 gap-4">
                     <div className="bg-gray-800/50 p-4 rounded-lg">
-                      <div className="text-sm text-gray-400">Founders</div>
-                      <div className="text-lg font-semibold text-violet-400">{roadmapData[selectedYear].equity.founders}</div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Users className="w-5 h-5 text-violet-400" />
+                        <div className="text-sm text-gray-400">Founders</div>
+                      </div>
+                      <div className="text-lg font-semibold text-gray-200">
+                        {roadmapData[selectedYear as keyof typeof roadmapData].equity?.founders}
+                      </div>
                     </div>
                     <div className="bg-gray-800/50 p-4 rounded-lg">
-                      <div className="text-sm text-gray-400">Investors</div>
-                      <div className="text-lg font-semibold text-blue-400">{roadmapData[selectedYear].equity.investors}</div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Building2 className="w-5 h-5 text-blue-400" />
+                        <div className="text-sm text-gray-400">Investors</div>
+                      </div>
+                      <div className="text-lg font-semibold text-gray-200">
+                        {roadmapData[selectedYear as keyof typeof roadmapData].equity?.investors}
+                      </div>
                     </div>
                     <div className="bg-gray-800/50 p-4 rounded-lg">
-                      <div className="text-sm text-gray-400">ESOP</div>
-                      <div className="text-lg font-semibold text-green-400">{roadmapData[selectedYear].equity.esop}</div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Lightbulb className="w-5 h-5 text-emerald-400" />
+                        <div className="text-sm text-gray-400">ESOP</div>
+                      </div>
+                      <div className="text-lg font-semibold text-gray-200">
+                        {roadmapData[selectedYear as keyof typeof roadmapData].equity?.esop}
+                      </div>
                     </div>
                   </div>
                   <div className="mt-2 text-sm text-gray-400 italic">
-                    {roadmapData[selectedYear].equity.details}
+                    {roadmapData[selectedYear as keyof typeof roadmapData].equity?.details}
                   </div>
                 </div>
               </div>
@@ -524,7 +581,7 @@ const EvolutionRoadmap = () => {
 
           {selectedTab === 'ventures' && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {Object.entries(roadmapData[selectedYear].ventures).map(([name, data]) => (
+              {Object.entries(roadmapData[selectedYear as keyof typeof roadmapData].ventures).map(([name, data]) => (
                 <div key={name}>
                   {renderVentureCard(name, data as { status: string; [key: string]: string | number })}
                 </div>
@@ -533,10 +590,34 @@ const EvolutionRoadmap = () => {
           )}
 
           {selectedTab === 'team' && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {Object.entries(roadmapData[selectedYear].team.breakdown).map(([category, structure]) => (
-                <div key={category}>
-                  {renderTeamBreakdown(category, structure)}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Object.entries(roadmapData[selectedYear as keyof typeof roadmapData].team.breakdown).map(([department, structure]) => (
+                <div key={department} className="bg-gray-900 border border-white/10 rounded-xl p-6">
+                  <h3 className="text-lg font-semibold mb-4 capitalize">{department}</h3>
+                  <div className="space-y-4">
+                    {'members' in structure ? (
+                      // Handle flat structure
+                      (structure as { members: TeamMember[] }).members.map((member: TeamMember, index: number) => (
+                        <div key={index}>
+                          {renderTeamMember(member)}
+                        </div>
+                      ))
+                    ) : (
+                      // Handle nested structure
+                      Object.entries(structure as { [key: string]: { members: TeamMember[] } }).map(([role, { members }]) => (
+                        <div key={role}>
+                          <h4 className="text-sm font-medium text-gray-400 mb-2 capitalize">{role}</h4>
+                          <div className="space-y-3">
+                            {members.map((member: TeamMember, index: number) => (
+                              <div key={index}>
+                                {renderTeamMember(member)}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
@@ -544,117 +625,151 @@ const EvolutionRoadmap = () => {
 
           {selectedTab === 'financials' && (
             <div className="space-y-6">
-              {/* Revenue Overview */}
+              {/* Financial Metrics Cards */}
+              <div className="bg-gray-900 border border-white/10 rounded-xl p-6">
+                <h3 className="text-lg font-semibold mb-6">Financial Metrics</h3>
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="bg-gray-800/50 p-4 rounded-lg">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Flame className="w-5 h-5 text-red-400" />
+                      <div className="text-sm text-gray-400">Monthly Burn Rate</div>
+                    </div>
+                    <div className="text-lg font-semibold text-gray-200">
+                      {roadmapData[selectedYear as keyof typeof roadmapData].financials.burnRate}
+                    </div>
+                  </div>
+
+                  <div className="bg-gray-800/50 p-4 rounded-lg">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Timer className="w-5 h-5 text-green-400" />
+                      <div className="text-sm text-gray-400">Runway</div>
+                    </div>
+                    <div className="text-lg font-semibold text-gray-200">
+                      {roadmapData[selectedYear as keyof typeof roadmapData].financials.runway}
+                    </div>
+                  </div>
+
+                  <div className="bg-gray-800/50 p-4 rounded-lg">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Target className="w-5 h-5 text-blue-400" />
+                      <div className="text-sm text-gray-400">Revenue Target</div>
+                    </div>
+                    <div className="text-lg font-semibold text-gray-200">
+                      {roadmapData[selectedYear as keyof typeof roadmapData].financials.revenue.target}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Revenue Breakdown Card */}
               <div className="bg-gray-900 border border-white/10 rounded-xl p-6">
                 <h3 className="text-lg font-semibold mb-6">Revenue Breakdown</h3>
-                <ResponsiveContainer width="100%" height={300}>
-                  <BarChart
-                    data={Object.entries(roadmapData[selectedYear].financials.revenue.breakdown).map(([key, value]) => ({
-                      name: key,
-                      value: formatCurrency(value)
-                    }))}
-                    margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                    <XAxis dataKey="name" stroke="#9ca3af" />
-                    <YAxis stroke="#9ca3af" />
-                    <Tooltip 
-                      contentStyle={{ background: '#1f2937', border: 'none' }}
-                      formatter={(value: number) => [`RM ${value}K`, 'Revenue']}
-                    />
-                    <Bar dataKey="value" fill="#9333ea" radius={[4, 4, 0, 0]}>
-                      {Object.entries(roadmapData[selectedYear].financials.revenue.breakdown).map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
+                <div className="grid grid-cols-3 gap-4">
+                  {Object.entries(roadmapData[selectedYear as keyof typeof roadmapData].financials.revenue.breakdown).map(([category, amount]) => {
+                    const getIconConfig = (cat: string) => {
+                      switch (cat.toLowerCase()) {
+                        case 'product':
+                          return { icon: Code2, color: 'text-violet-400' };
+                        case 'consulting':
+                          return { icon: Presentation, color: 'text-blue-400' };
+                        case 'animation':
+                          return { icon: Sparkles, color: 'text-emerald-400' };
+                        default:
+                          return { icon: Code2, color: 'text-gray-400' };
+                      }
+                    };
 
-              {/* Financial Metrics */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-gray-900 border border-white/10 rounded-xl p-6">
-                  <h4 className="text-sm font-medium text-gray-400 mb-2">Monthly Burn Rate</h4>
-                  <div className="text-2xl font-semibold text-gray-200">
-                    {roadmapData[selectedYear].financials.burnRate}
-                  </div>
-                  <div className="mt-4">
-                    <div className="w-full bg-gray-800 rounded-full h-2.5">
-                      <div className="bg-red-500 h-2.5 rounded-full" style={{ width: '70%' }}></div>
-                    </div>
-                  </div>
-                </div>
+                    const { icon: Icon, color } = getIconConfig(category);
 
-                <div className="bg-gray-900 border border-white/10 rounded-xl p-6">
-                  <h4 className="text-sm font-medium text-gray-400 mb-2">Runway</h4>
-                  <div className="text-2xl font-semibold text-gray-200">
-                    {roadmapData[selectedYear].financials.runway}
-                  </div>
-                  <div className="mt-4">
-                    <div className="w-full bg-gray-800 rounded-full h-2.5">
-                      <div className="bg-green-500 h-2.5 rounded-full" style={{ width: '60%' }}></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-gray-900 border border-white/10 rounded-xl p-6">
-                  <h4 className="text-sm font-medium text-gray-400 mb-2">Revenue Target</h4>
-                  <div className="text-2xl font-semibold text-gray-200">
-                    {roadmapData[selectedYear].financials.revenue.target}
-                  </div>
-                  <div className="mt-4">
-                    <div className="w-full bg-gray-800 rounded-full h-2.5">
-                      <div className="bg-blue-500 h-2.5 rounded-full" style={{ width: '85%' }}></div>
-                    </div>
-                  </div>
+                    return (
+                      <div key={category} className="bg-gray-800/50 p-4 rounded-lg">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Icon className={`w-5 h-5 ${color}`} />
+                          <div className="text-sm text-gray-400 capitalize">{category}</div>
+                        </div>
+                        <div className="text-lg font-semibold text-gray-200">{amount}</div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
-              {/* Growth Trend */}
+              {/* Financial Growth Chart */}
               <div className="bg-gray-900 border border-white/10 rounded-xl p-6">
                 <h3 className="text-lg font-semibold mb-6">Financial Growth</h3>
+                
+                {/* Year Range Selector */}
+                <div className="mb-4 flex items-center gap-4">
+                  <div className="flex items-center gap-2">
+                    <label className="text-sm text-gray-400">From:</label>
+                    <select 
+                      value={yearRange.start}
+                      onChange={(e) => setYearRange(prev => ({ ...prev, start: e.target.value }))}
+                      className="bg-gray-800 text-gray-300 rounded-md px-2 py-1"
+                    >
+                      {Object.keys(roadmapData).map(year => (
+                        <option key={year} value={year}>{year}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <label className="text-sm text-gray-400">To:</label>
+                    <select 
+                      value={yearRange.end}
+                      onChange={(e) => setYearRange(prev => ({ ...prev, end: e.target.value }))}
+                      className="bg-gray-800 text-gray-300 rounded-md px-2 py-1"
+                    >
+                      {Object.keys(roadmapData).map(year => (
+                        <option key={year} value={year}>{year}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                {/* Growth Chart */}
                 <ResponsiveContainer width="100%" height={300}>
                   <AreaChart
-                    data={Object.keys(roadmapData).map(year => ({
-                      year,
-                      revenue: formatCurrency(roadmapData[year as YearKey].financials.revenue.target),
-                      burn: formatCurrency(roadmapData[year as YearKey].financials.burnRate)
-                    }))}
-                    margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+                    data={Object.keys(roadmapData)
+                      .filter(year => year >= yearRange.start && year <= yearRange.end)
+                      .map(year => ({
+                        year,
+                        revenue: convertCurrencyToNumber(roadmapData[year as keyof typeof roadmapData].financials.revenue.target),
+                        burn: convertCurrencyToNumber(roadmapData[year as keyof typeof roadmapData].financials.burnRate)
+                      }))}
+                    margin={{ top: 10, right: 30, left: 20, bottom: 5 }}
                   >
-                    <defs>
-                      <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#9333ea" stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor="#9333ea" stopOpacity={0}/>
-                      </linearGradient>
-                      <linearGradient id="colorBurn" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#ef4444" stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
-                      </linearGradient>
-                    </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                     <XAxis dataKey="year" stroke="#9ca3af" />
-                    <YAxis stroke="#9ca3af" />
+                    <YAxis 
+                      domain={['auto', 'auto']}
+                      tickFormatter={(value) => {
+                        if (value >= 1000000000) return `${(value / 1000000000)}B`;
+                        if (value >= 1000000) return `${(value / 1000000)}M`;
+                        if (value >= 1000) return `${(value / 1000)}K`;
+                        return value;
+                      }}
+                      stroke="#9ca3af"
+                    />
                     <Tooltip 
                       contentStyle={{ background: '#1f2937', border: 'none' }}
-                      formatter={(value: number) => [`RM ${value}K`, '']}
+                      formatter={(value: number) => [`RM ${value.toLocaleString()}`, '']}
                     />
                     <Legend />
-                    <Area 
-                      type="monotone" 
-                      dataKey="revenue" 
-                      stroke="#9333ea" 
-                      fillOpacity={1} 
-                      fill="url(#colorRevenue)" 
+                    <Area
+                      type="monotone"
+                      dataKey="revenue"
                       name="Revenue Target"
+                      stroke="#9333ea"
+                      fill="#9333ea"
+                      fillOpacity={0.3}
                     />
-                    <Area 
-                      type="monotone" 
-                      dataKey="burn" 
-                      stroke="#ef4444" 
-                      fillOpacity={1} 
-                      fill="url(#colorBurn)" 
+                    <Area
+                      type="monotone"
+                      dataKey="burn"
                       name="Burn Rate"
+                      stroke="#60a5fa"
+                      fill="#60a5fa"
+                      fillOpacity={0.3}
                     />
                   </AreaChart>
                 </ResponsiveContainer>
@@ -664,7 +779,7 @@ const EvolutionRoadmap = () => {
 
           {selectedTab === 'risks' && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {roadmapData[selectedYear].risks.map((risk, index) => (
+              {roadmapData[selectedYear as keyof typeof roadmapData].risks?.map((risk: string, index: number) => (
                 <div key={index} className="bg-gray-900 border border-white/10 rounded-xl p-6">
                   <span className="text-gray-400">{risk}</span>
                 </div>
@@ -674,38 +789,32 @@ const EvolutionRoadmap = () => {
 
           {selectedTab === 'structure' && (
             <div className="space-y-6">
-              {roadmapData[selectedYear].subsidiaries?.map((subsidiary, index) => (
+              {roadmapData[selectedYear as keyof typeof roadmapData].subsidiaries.map((subsidiary: any, index: number) => (
                 <div 
                   key={index} 
+                  className="w-full"
                   onClick={() => setExpandedSubsidiaries(prev => ({
                     ...prev,
                     [subsidiary.name]: !prev[subsidiary.name]
                   }))}
                 >
-                  <motion.div className="cursor-pointer">
-                    <div className="flex items-center gap-2">
-                      {expandedSubsidiaries[subsidiary.name] ? 
-                        <ChevronDown size={20} /> : 
-                        <ChevronRight size={20} />
-                      }
-                      {renderEntityCard({
-                        ...subsidiary,
-                        description: getSubsidiaryDescription(subsidiary.name),
-                        details: expandedSubsidiaries[subsidiary.name] ? 
-                          getSubsidiaryDetails(subsidiary.name) : [],
-                        ventures: expandedSubsidiaries[subsidiary.name] ? 
-                          subsidiary.ventures?.map(venture => ({
-                            ...venture,
-                            description: getVentureDescription(venture.name),
-                            details: getVentureDetails(venture.name)
-                          })) : [],
-                        units: expandedSubsidiaries[subsidiary.name] ? 
-                          subsidiary.units?.map(unit => ({
-                            ...unit,
-                            description: getUnitDescription(unit.name),
-                            details: getUnitDetails(unit.name)
-                          })) : []
-                      })}
+                  <motion.div className="cursor-pointer w-full">
+                    <div className="flex items-start gap-2 w-full">
+                      <div className="pt-6">
+                        {expandedSubsidiaries[subsidiary.name] ? 
+                          <ChevronDown size={20} /> : 
+                          <ChevronRight size={20} />
+                        }
+                      </div>
+                      <div className="flex-1">
+                        {renderEntityCard({
+                          ...subsidiary,
+                          divisions: expandedSubsidiaries[subsidiary.name] ? subsidiary.divisions : [],
+                          units: expandedSubsidiaries[subsidiary.name] ? subsidiary.units : [],
+                          description: subsidiary.description || getSubsidiaryDescription(subsidiary.name),
+                          services: subsidiary.services || getSubsidiaryDetails(subsidiary.name)
+                        })}
+                      </div>
                     </div>
                   </motion.div>
                 </div>
@@ -719,10 +828,10 @@ const EvolutionRoadmap = () => {
             <h3 className="text-lg font-semibold mb-6">Growth Trajectory</h3>
             <ResponsiveContainer width="100%" height={300}>
               <AreaChart
-                data={Object.keys(roadmapData).map(year => ({
+                data={Object.keys(roadmapData).map((year) => ({
                   year,
-                  team: roadmapData[year as YearKey].team.total,
-                  revenue: formatCurrency(roadmapData[year as YearKey].financials.revenue.target)
+                  team: roadmapData[year as keyof typeof roadmapData].team.total,
+                  revenue: convertCurrencyToNumber(roadmapData[year as keyof typeof roadmapData].financials.revenue.target)
                 }))}
                 margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
               >
@@ -741,7 +850,7 @@ const EvolutionRoadmap = () => {
                 <Tooltip 
                   contentStyle={{ background: '#1f2937', border: 'none' }}
                   formatter={(value: number, name: string) => [
-                    name === 'team' ? `${value} members` : `RM ${value}K`,
+                    name === 'team' ? `${value} members` : `RM ${value.toLocaleString()}`,
                     name === 'team' ? 'Team Size' : 'Revenue Target'
                   ]}
                 />
@@ -826,6 +935,8 @@ const getVentureDescription = (name: string): string => {
   const descriptions: { [key: string]: string } = {
     'CareerRPG': 'Gamified Career Development Platform',
     'Blanjer': 'Personal Finance Management Solution',
+    'ARespiratory': 'AR-Powered Healthcare Solution',
+    'ServisLah': 'On-Demand Car Service App',
     // Add more descriptions as needed
   };
   return descriptions[name] || '';
